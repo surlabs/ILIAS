@@ -26,10 +26,10 @@
 		display: flex;
 		align-items: center;
 		min-height: @il-drilldown-item-height; // content is centered by flex-box, not through padding
-		margin-bottom: @il-drilldown-item-spacing;
 		padding: @il-drilldown-spacing-vertical @il-drilldown-spacing-horizontal;
 		padding-left: 0;
 		z-index: initial; // so slate can cover up this specific header
+		border-bottom: 1px solid @il-main-border-color;
 		h2 {
 			// remove default headline margin, headline is centered using flex, padding keeps distance to border
 			margin: 0;
@@ -108,7 +108,7 @@
 		}
 		.icon {
 			margin-right: @il-drilldown-spacing-horizontal;
-			filter: invert(50%);
+
 		}
 		.bulky-label {
 			flex-grow: 1; // pushes elements before and after to the outer sides

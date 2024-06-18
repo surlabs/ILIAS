@@ -76,7 +76,6 @@
 		align-items: center;
 		background: @il-mainbar-btn-bg-color;
 		border: 0;
-		border-bottom: @il-mainbar-btn-border;
 		color: @il-mainbar-btn-bg-color-engaged;
 		display: inline-flex;
 		flex-flow: column wrap;
@@ -87,7 +86,7 @@
 		width: @il-mainbar-btn-height;
 		width: 100%;
 		.icon {
-			filter: @il-mainbar-trigger-icon-filter;
+			filter: @il-mainbar-trigger-icon-filter grayscale(1) contrast(4.5);
 			&.small {
 				width: @il-mainbar-trigger-icon-size;
 				height: @il-mainbar-trigger-icon-size;
@@ -95,6 +94,7 @@
 		}
 		//Note, for some reason, safari needs this in a seperate section, see:
 		&.engaged{
+			border-right: 1px solid @il-extended-color-3;
 			.focus_hovered_engaged_slate_trigger_mixin;
 		}
 		&:focus-visible{
@@ -161,7 +161,7 @@
 
 // mainbar slates
 .il-mainbar-slates {
-	.shadow-right;
+	border-right: 1px solid @il-main-border-color;
 	background: @il-mainbar-slates-bg-color;
 	display: none;
 	position: relative;
@@ -189,7 +189,7 @@
 		background-color: @il-mainbar-tools-btn-bg-engaged;
 		color: @il-mainbar-btn-color-engaged;
 		.icon  {
-			filter: invert(30%);
+			filter: invert(0%);
 		}
 	}
 }
@@ -234,7 +234,7 @@
 }
 
 .il-mainbar-tools-entries-bg {
-	background-color: @il-mainbar-tools-btn-bg-engaged;
+	background-color: #ecf0f1;
 	display: flex;
 	height: @il-mainbar-btn-height;
 	width: 100%;

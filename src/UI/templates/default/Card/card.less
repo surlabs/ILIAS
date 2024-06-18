@@ -1,5 +1,5 @@
 .il-card {
-	padding: 0 0 @il-padding-large-vertical 0;
+	padding: 0;
 	width: 100%;
 	position:relative;
 	background-color: @il-card-background;
@@ -126,6 +126,7 @@
 						display: block;
 						margin-left: auto;
 						margin-right: auto;
+						color: @il-neutral-color;
 					}
 					
 					&:focus-visible {
@@ -155,8 +156,15 @@
 	}
 }
 
+@media (min-width: @screen-lg-min) {
+	.row-eq-height {
+		 gap: 10px;
+	}
+}
+
 /* see bug #25920, limit size of cards for small screens */
 @media (max-width: @screen-sm-min) {
+	
 	.il-card {
 		max-width: @il-card-max-width-xs;
 		margin-right: auto;

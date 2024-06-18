@@ -122,12 +122,16 @@ label, input[type=checkbox], input[type=radio], select {
   color: @il-text-color;
   border: 1px solid @il-main-border-dark-color;
 
+  &::placeholder {
+    color: #505050;
+  }
+
 }
 
 .form-control[disabled],
 .form-control[readonly],
 fieldset[disabled] .form-control {
-  background-color: @il-main-dark-bg;
+  background-color: @il-main-darker-bg;
 }
 
 .form-horizontal {
@@ -236,7 +240,7 @@ select.form-control {
 
 .radio input[type="radio"],
 .radio-inline input[type="radio"] {
-  vertical-align: top;
+  vertical-align: baseline;
 }
 
 .radio .help-block {
