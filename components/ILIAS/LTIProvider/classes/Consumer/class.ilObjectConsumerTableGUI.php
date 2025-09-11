@@ -13,143 +13,242 @@
  * us at:
  * https://www.ilias.de
  * https://github.com/ILIAS-eLearning
- *
  *********************************************************************/
 
 declare(strict_types=1);
 
+use ILIAS\UI\Factory;
+use ILIAS\UI\Renderer;
+use ILIAS\UI\Component\Table\DataRowBuilder;
+use ILIAS\UI\Component\Table\DataRetrieval;
+use ILIAS\UI\Component\Table\Column\Column;
+use ILIAS\UI\URLBuilder;
+use ILIAS\UI\URLBuilderToken;
+use ILIAS\HTTP\Services;
+use Psr\Http\Message\ServerRequestInterface;
+use ILIAS\Data\Range;
+use ILIAS\Data\Order;
+use ilLTIDataConnector;
+use ilObjLTIAdministration;
+use ilObjRole;
+use ilObjectFactory;
+
 /**
- * TableGUI class for LTI consumer listing
+ * Table for listing LTI consumers using the new UI framework
  *
  * @author Jesús López <lopez@leifos.com>
- * @version $Id$
- *
- * @ingroup ServicesLTI
+ * @author Felix Wensing <felix.wensing@gmx.de>
  */
-class ilObjectConsumerTableGUI extends ilTable2GUI
+class ilObjectConsumerTableGUI implements DataRetrieval
 {
-    protected bool $editable = true;
-    protected \ILIAS\DI\Container $dic;
+    private readonly Factory $factory;
+    private readonly Renderer $renderer;
+    private readonly ServerRequestInterface $request;
+    private readonly Services $http;
+    private readonly \ILIAS\Refinery\Factory $refinery;
+    private readonly ilLanguage $lng;
+    private readonly ilCtrl $ctrl;
 
-    public function __construct(?object $a_parent_obj, string $a_parent_cmd)
+    private bool $editable = true;
+
+    public function __construct(private readonly object $parent, private readonly string $parent_cmd)
     {
         global $DIC;
-        $this->dic = $DIC;
 
-        $this->setId("ltioconsumer");
+        $this->factory = $DIC->ui()->factory();
+        $this->renderer = $DIC->ui()->renderer();
+        $this->request = $DIC->http()->request();
+        $this->http = $DIC->http();
+        $this->refinery = $DIC->refinery();
+        $this->lng = $DIC->language();
+        $this->ctrl = $DIC->ctrl();
+    }
 
-        parent::__construct($a_parent_obj, $a_parent_cmd);
-
-        $this->setLimit(9999);
-
-        $this->setTitle($DIC->language()->txt("lti_object_consumer"));
-
-        $this->addColumn($DIC->language()->txt("active"), "active");
-        $this->addColumn($DIC->language()->txt("title"), "title");
-        $this->addColumn($DIC->language()->txt("description"), "description");
-        $this->addColumn($DIC->language()->txt("prefix"), "prefix");
-        $this->addColumn($DIC->language()->txt("in_use"), "language");
-        $this->addColumn($DIC->language()->txt("objects"), "objects");
-        $this->addColumn($DIC->language()->txt("role"), "role");
-        $this->addColumn($DIC->language()->txt("actions"), "");
-
-        $this->setFormAction($DIC->ctrl()->getFormAction($a_parent_obj));
-        $this->setRowTemplate("tpl.lti_consumer_list_row.html", "components/ILIAS/LTIProvider");
-        $this->setDefaultOrderField("title");
-
-        $this->getItems();
+    public function setEditable(bool $status): void
+    {
+        $this->editable = $status;
     }
 
     /**
-     * Set editable. Depends on write access
-     * => show/hide actions for consumers.
+     * @return list<array{
+     *     id: int,
+     *     active: bool,
+     *     title: string,
+     *     description: string,
+     *     prefix: string,
+     *     language: string,
+     *     objects: string,
+     *     role: string
+     * }>
      */
-    public function setEditable(bool $a_status): void
+    private function getRecords(): array
     {
-        $this->editable = $a_status;
-    }
+        $connector = new ilLTIDataConnector();
+        $consumer_data = $connector->getGlobalToolConsumerSettings();
 
-    /**
-     * Check if write permission given
-     */
-    public function isEditable(): bool
-    {
-        return $this->editable;
-    }
-
-    /**
-     * Get consumer data
-     */
-    public function getItems(): void
-    {
-        $dataConnector = new ilLTIDataConnector();
-
-        $consumer_data = $dataConnector->getGlobalToolConsumerSettings();
-        $result = array();
+        $records = [];
         foreach ($consumer_data as $cons) {
-            $result[] = array(
-                "id" => $cons->getExtConsumerId(),
-                "title" => $cons->getTitle(),
-                "description" => $cons->getDescription(),
-                "prefix" => $cons->getPrefix(),
-                "language" => $cons->getLanguage(),
-                "role" => $cons->getRole(),
-                "active" => $cons->getActive()
-            );
+            $obj_types = ilObjLTIAdministration::getActiveObjectTypes($cons->getExtConsumerId());
+            $objects = [];
+            foreach ($obj_types as $obj_type) {
+                $objects[] = $this->lng->txt('objs_' . $obj_type);
+            }
+
+            $role_title = '';
+            $role = ilObjectFactory::getInstanceByObjId($cons->getRole(), false);
+            if ($role instanceof ilObjRole) {
+                $role_title = $role->getTitle();
+            }
+
+            $records[] = [
+                'id' => (int) $cons->getExtConsumerId(),
+                'active' => (bool) $cons->getActive(),
+                'title' => (string) $cons->getTitle(),
+                'description' => (string) $cons->getDescription(),
+                'prefix' => (string) $cons->getPrefix(),
+                'language' => (string) $cons->getLanguage(),
+                'objects' => $objects ? implode(', ', $objects) : '-',
+                'role' => $role_title
+            ];
         }
 
-        $this->setData($result);
+        return $records;
     }
 
-    /**
-     * Fill a single data row.
-     */
-    protected function fillRow(array $a_set): void
-    {
-        $this->dic->ctrl()->setParameter($this->getParentObject(), "cid", $a_set["id"]);
+    // DataRetrieval implementation
+    public function getRows(
+        DataRowBuilder $row_builder,
+        array $visible_column_ids,
+        Range $range,
+        Order $order,
+        ?array $filter_data = null,
+        ?array $additional_parameters = null
+    ): \Generator {
+        $records = $this->getRecords();
 
-        $this->tpl->setVariable("TXT_TITLE", $a_set["title"]);
-        $this->tpl->setVariable("TXT_DESCRIPTION", $a_set["description"]);
-        $this->tpl->setVariable("TXT_PREFIX", $a_set["prefix"]);
-        //        $this->tpl->setVariable("TXT_KEY", $a_set["key"]);
-        //        $this->tpl->setVariable("TXT_SECRET", $a_set["secret"]);
-        $this->tpl->setVariable("TXT_LANGUAGE", $a_set["language"]);
-        $obj_types = ilObjLTIAdministration::getActiveObjectTypes($a_set["id"]);
-        if ($obj_types) {
-            foreach ($obj_types as $obj_type) {
-                $this->tpl->setCurrentBlock("objects");
-                $this->tpl->setVariable("OBJECTS", $GLOBALS['DIC']->language()->txt('objs_' . $obj_type));
-                $this->tpl->parseCurrentBlock();
+        // simple ordering
+        if ($order) {
+            [$order_field, $order_dir] = $order->join([], fn($ret, $k, $v) => [$k, $v]);
+            usort($records, static fn($a, $b) => ($a[$order_field] <=> $b[$order_field]));
+            if ($order_dir === Order::DESC) {
+                $records = array_reverse($records);
             }
-        } else {
-            $this->tpl->setVariable("NO_OBJECTS", "-");
         }
 
-        $role = ilObjectFactory::getInstanceByObjId($a_set['role'], false);
-        if ($role instanceof ilObjRole) {
-            $this->tpl->setVariable('TXT_ROLE', $role->getTitle());
-        } else {
-            $this->tpl->setVariable('TXT_ROLE', '');
+        if ($range) {
+            $records = array_slice($records, $range->getStart(), $range->getLength());
         }
 
-        if ($a_set["active"]) {
-            $this->tpl->setVariable("TXT_ACTIVE", $this->dic->language()->txt('active'));
-            $label_status = $this->dic->language()->txt("deactivate");
-        } else {
-            $this->tpl->setVariable("TXT_ACTIVE", $this->dic->language()->txt('inactive'));
-            $label_status = $this->dic->language()->txt("activate");
+        foreach ($records as $record) {
+            $row = $row_builder->buildDataRow((string) $record['id'], $record);
+            if ($this->editable) {
+                $row = $row
+                    ->withDisabledAction('activate', $record['active'])
+                    ->withDisabledAction('deactivate', !$record['active']);
+            }
+            yield $row;
+        }
+    }
+
+    public function getTotalRowCount(?array $filter_data = null, ?array $additional_parameters = null): ?int
+    {
+        return count($this->getRecords());
+    }
+
+    /** @return array<string, Column> */
+    private function getColumns(): array
+    {
+        return [
+            'active' => $this->factory->table()->column()->boolean(
+                $this->lng->txt('active'),
+                $this->lng->txt('yes'),
+                $this->lng->txt('no')
+            ),
+            'title' => $this->factory->table()->column()->text($this->lng->txt('title')),
+            'description' => $this->factory->table()->column()->text($this->lng->txt('description')),
+            'prefix' => $this->factory->table()->column()->text($this->lng->txt('prefix')),
+            'language' => $this->factory->table()->column()->text($this->lng->txt('in_use')),
+            'objects' => $this->factory->table()->column()->text($this->lng->txt('objects')),
+            'role' => $this->factory->table()->column()->text($this->lng->txt('role'))
+        ];
+    }
+
+    /** @return array<string, \ILIAS\UI\Component\Table\Action\Action> */
+    private function getActions(
+        URLBuilder $url_builder,
+        URLBuilderToken $action_token,
+        URLBuilderToken $row_id_token
+    ): array {
+        if (!$this->editable) {
+            return [];
         }
 
-        if ($this->isEditable()) {
-            $edit_url = $this->dic->ctrl()->getLinkTarget($this->getParentObject(), "editConsumer");
-            $delete_url = $this->dic->ctrl()->getLinkTarget($this->getParentObject(), "deleteLTIConsumer");
-            $status_url = $this->dic->ctrl()->getLinkTarget($this->getParentObject(), "changeStatusLTIConsumer");
-            $actions = [];
-            $actions[] = $this->dic->ui()->factory()->link()->standard($this->lng->txt('edit'), $edit_url);
-            $actions[] = $this->dic->ui()->factory()->link()->standard($this->lng->txt('delete'), $delete_url);
-            $actions[] = $this->dic->ui()->factory()->link()->standard($label_status, $status_url);
-            $dropdown = $this->dic->ui()->factory()->dropdown()->standard($actions)->withLabel($this->lng->txt('actions'));
-            $this->tpl->setVariable("ACTION", $this->dic->ui()->renderer()->render($dropdown));
+        return [
+            'edit' => $this->factory->table()->action()->single(
+                $this->lng->txt('edit'),
+                $url_builder->withParameter($action_token, 'edit'),
+                $row_id_token
+            ),
+            'delete' => $this->factory->table()->action()->single(
+                $this->lng->txt('delete'),
+                $url_builder->withParameter($action_token, 'delete'),
+                $row_id_token
+            ),
+            'activate' => $this->factory->table()->action()->single(
+                $this->lng->txt('activate'),
+                $url_builder->withParameter($action_token, 'activate'),
+                $row_id_token
+            ),
+            'deactivate' => $this->factory->table()->action()->single(
+                $this->lng->txt('deactivate'),
+                $url_builder->withParameter($action_token, 'deactivate'),
+                $row_id_token
+            )
+        ];
+    }
+
+    public function getHTML(string $url): string
+    {
+        $df = new \ILIAS\Data\Factory();
+        $table_uri = $df->uri($url);
+        $url_builder = new URLBuilder($table_uri);
+
+        [$url_builder, $action_token, $row_id_token] = $url_builder->acquireParameters(
+            ['cid'],
+            'table_action',
+            'id'
+        );
+
+        // handle triggered actions
+        $query = $this->http->wrapper()->query();
+        if ($query->has($action_token->getName())) {
+            $action = $query->retrieve($action_token->getName(), $this->refinery->to()->string());
+            $id = $query->retrieve($row_id_token->getName(), $this->refinery->to()->string());
+            $this->ctrl->setParameter($this->parent, 'cid', $id);
+
+            switch ($action) {
+                case 'edit':
+                    $this->ctrl->redirect($this->parent, 'editConsumer');
+                    break;
+                case 'delete':
+                    $this->ctrl->redirect($this->parent, 'deleteLTIConsumer');
+                    break;
+                case 'activate':
+                case 'deactivate':
+                    $this->ctrl->redirect($this->parent, 'changeStatusLTIConsumer');
+                    break;
+            }
         }
+
+        $table = $this->factory
+            ->table()
+            ->data($this->lng->txt('lti_object_consumer'), $this->getColumns(), $this)
+            ->withId(self::class)
+            ->withOrder(new Order('title', Order::ASC))
+            ->withActions($this->getActions($url_builder, $action_token, $row_id_token))
+            ->withRequest($this->request);
+
+        return $this->renderer->render($table);
     }
 }
+
