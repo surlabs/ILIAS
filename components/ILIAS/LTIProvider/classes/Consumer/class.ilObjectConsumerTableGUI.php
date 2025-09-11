@@ -203,11 +203,14 @@ class ilObjectConsumerTableGUI implements DataRetrieval
         ];
     }
 
-    public function getHTML(string $url): string
+    public function getHTML(): string
     {
+        // Build an absolute URI as required by the data factory
         $df = new \ILIAS\Data\Factory();
-        $table_uri = $df->uri($url);
-        $url_builder = new URLBuilder($table_uri);
+        $base_uri = $this->http->request()->getUri();
+        $path = $this->ctrl->getLinkTarget($this->parent, $this->parent_cmd);
+        $table_uri = $base_uri->withPath($path)->withQuery('');
+        $url_builder = new URLBuilder($df->uri((string) $table_uri));
 
         [$url_builder, $action_token, $row_id_token] = $url_builder->acquireParameters(
             ['cid'],

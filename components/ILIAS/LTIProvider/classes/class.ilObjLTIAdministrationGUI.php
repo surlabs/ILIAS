@@ -441,9 +441,7 @@ class ilObjLTIAdministrationGUI extends ilObjectGUI
             'listConsumers'
         );
         $tbl->setEditable($this->checkPermissionBool('write'));
-        $this->tpl->setContent(
-            $tbl->getHTML($this->ctrl->getLinkTarget($this, 'listConsumers'))
-        );
+        $this->tpl->setContent($tbl->getHTML());
     }
 
     /**
