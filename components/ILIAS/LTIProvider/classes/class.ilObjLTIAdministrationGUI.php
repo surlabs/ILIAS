@@ -438,10 +438,12 @@ class ilObjLTIAdministrationGUI extends ilObjectGUI
         $this->tabs_gui->activateSubTab("consumers");
         $tbl = new ilObjectConsumerTableGUI(
             $this,
-            "listConsumers"
+            'listConsumers'
         );
         $tbl->setEditable($this->checkPermissionBool('write'));
-        $this->tpl->setContent($tbl->getHTML());
+        $this->tpl->setContent(
+            $tbl->getHTML($this->ctrl->getLinkTarget($this, 'listConsumers'))
+        );
     }
 
     /**
