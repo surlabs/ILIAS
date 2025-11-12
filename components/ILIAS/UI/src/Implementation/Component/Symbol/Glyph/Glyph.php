@@ -100,6 +100,7 @@ class Glyph implements C\Symbol\Glyph\Glyph
     private array $counters;
     private bool $highlighted;
     private bool $active = true;
+    protected bool $renderAsButton = false;
 
     public function __construct(string $type, string $label, string $action = null)
     {
@@ -214,5 +215,23 @@ class Glyph implements C\Symbol\Glyph\Glyph
         $has_action = ($this->action !== null && $this->action !== "");
         $has_signal = isset($this->triggered_signals['click']) && $this->triggered_signals['click'] !== null;
         return  ($has_signal || $has_action) && $this->isActive();
+    }
+
+    /**
+     * Get a glyph like this, but render it as a button element.
+     */
+    public function renderAsButton(): C\Symbol\Glyph\Glyph
+    {
+        $clone = clone $this;
+        $clone->renderAsButton = true;
+        return $clone;
+    }
+
+    /**
+     * Returns whether the Glyph should be rendered as a button.
+     */
+    public function shouldRenderAsButton(): bool
+    {
+        return $this->renderAsButton;
     }
 }

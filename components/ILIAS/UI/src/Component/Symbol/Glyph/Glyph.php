@@ -164,4 +164,14 @@ interface Glyph extends Symbol, Clickable
 
     /** @deprecated will be removed in ILIAS 11. please use a Button instead. */
     public function getOnLoadCode(): ?\Closure;
+
+    /**
+     * Get a glyph like this, but render it as a button element.
+     */
+    public function renderAsButton(): Glyph;
+
+    /**
+     * Returns whether the Glyph should be rendered as a button.
+     */
+    public function shouldRenderAsButton(): bool;
 }

@@ -43,7 +43,7 @@ class Renderer extends AbstractComponentRenderer
             $this->cannotHandleComponent($component);
         }
 
-        $tpl_file = $this->getTemplateFilename();
+        $tpl_file = $component->shouldRenderAsButton() ? "tpl.glyph.button.html" : $this->getTemplateFilename();
         $tpl = $this->getTemplate($tpl_file, true, true);
 
         $tpl = $this->renderAction($component, $tpl);
