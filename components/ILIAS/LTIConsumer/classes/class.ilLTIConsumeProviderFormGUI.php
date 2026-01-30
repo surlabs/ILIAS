@@ -57,6 +57,77 @@ class ilLTIConsumeProviderFormGUI extends ilPropertyFormGUI
         $this->adminContext = $adminContext;
     }
 
+    /**
+     * Build the "Deep linking" UI (button + modal with iframe).
+     *
+     * @param string $target_gui_class GUI class that has startDeepLinkingCmd()
+     * @param string $cmd command name, default 'startDeepLinking'
+     * @return string                  rendered HTML to embed in a form/custom input
+     */
+    private function buildDlUiParts(
+        string $target_gui_class = ilLTIConsumeProviderSettingsGUI::class,
+        string $cmd = 'startDeepLinking'
+    ): string {
+        global $DIC;
+
+        $factory = $DIC->ui()->factory();
+        $renderer = $DIC->ui()->renderer();
+        $ctrl = $DIC->ctrl();
+
+        $iframe_url = $ctrl->getLinkTargetByClass(
+            [ilAdministrationGUI::class, $target_gui_class],
+            $cmd,
+            '',
+            true
+        );
+
+        $iframe_html = sprintf(
+            '<iframe src="%s" style="width:100%%;height:70vh;border:0;" allow="fullscreen"></iframe>',
+            htmlspecialchars($iframe_url, ENT_QUOTES)
+        );
+
+        $content = $factory->legacy($iframe_html);
+
+        $modal = $factory
+            ->modal()
+            ->roundtrip($this->lng->txt('subtab_provider_settings'), $content);
+
+        $button = $factory
+            ->button()
+            ->standard($this->lng->txt('select'), '')
+            ->withOnClick($modal->getShowSignal());
+
+        $html = $renderer->render([$button, $modal]);
+
+        $html .= <<<HTML
+        <script>
+        function closeDialog() {
+            let dlg = document.querySelector('dialog.c-modal.il-modal-roundtrip[open], dialog.c-modal[open]');
+            if (dlg && typeof dlg.close === 'function') {
+                dlg.close();
+            }
+            let backdrop = document.querySelector('.c-modal__backdrop, dialog + .c-modal__backdrop');
+            if (backdrop) {
+                backdrop.remove();
+            }
+
+        }
+        document.addEventListener('click', function (e) {
+            closeDialog();        
+           }, true);
+        
+        window.onLtiDeepLinkDone = function (url) {
+            closeDialog();
+            if(url) {
+                window.location.href = url;
+            }
+        };
+        </script>
+        HTML;
+
+        return $html;
+    }
+
     public function initForm(string $formaction, string $saveCmd, string $cancelCmd): void
     {
         global $DIC;
