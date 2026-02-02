@@ -55,7 +55,7 @@ use ILIAS\GlobalScreen\Services as GlobalScreen;
 * @ilCtrl_Calls ilAdministrationGUI: ilObjStudyProgrammeAdminGUI, ilObjStudyProgrammeGUI
 * @ilCtrl_Calls ilAdministrationGUI: ilObjBadgeAdministrationGUI, ilMemberExportSettingsGUI
 * @ilCtrl_Calls ilAdministrationGUI: ilObjFileAccessSettingsGUI, ilPermissionGUI, ilObjRemoteTestGUI, ilPropertyFormGUI
-* @ilCtrl_Calls ilAdministrationGUI: ilObjCmiXapiAdministrationGUI, ilObjCmiXapiGUI, ilObjLTIConsumerGUI, ilLTIConsumeProviderSettingsGUI
+* @ilCtrl_Calls ilAdministrationGUI: ilObjCmiXapiAdministrationGUI, ilObjCmiXapiGUI, ilObjLTIConsumerGUI, ilLTIConsumerSettingsGUI
 * @ilCtrl_Calls ilAdministrationGUI: ilObjLearningSequenceAdminGUI, ilObjContentPageAdministrationGUI
 * @ilCtrl_Calls ilAdministrationGUI: ilObjIndividualAssessmentGUI
 * @ilCtrl_Calls ilAdministrationGUI: ilLPProgressTableGUI
@@ -120,7 +120,8 @@ class ilAdministrationGUI implements ilCtrlBaseClassInterface
 
         // determine current ref id and mode
         $ref_id = $this->request->getRefId();
-        if ($this->tree->isInTree($ref_id)) {
+        // dump($ref_id);exit();
+        if ($tree->isInTree($ref_id)) {
             $this->cur_ref_id = $ref_id;
         } else {
             throw new ilPermissionException("Invalid ref id.");
@@ -186,22 +187,70 @@ class ilAdministrationGUI implements ilCtrlBaseClassInterface
             $this->ctrl->redirectByClass($next_class);
         }
 
-        // forward all other classes to gui commands
-        if ($next_class != "" && $next_class !== "iladministrationgui") {
-            $class_path = $this->ctrl->lookupClassPath($next_class);
-            if (is_file($class_path)) {
-                require_once $class_path;   // note: org unit plugins still need the require
-            }
-            // get gui class instance
-            $class_name = $this->ctrl->getClassForClasspath($class_path);
-            if (($next_class === "ilobjrolegui" || $next_class === "ilobjusergui"
-                || $next_class === "ilobjroletemplategui")) {
-                if ($this->requested_obj_id > 0) {
-                    $this->gui_obj = new $class_name(null, $this->requested_obj_id, false, false);
-                    $this->gui_obj->setCreationMode(false);
-                } else {
-                    $this->gui_obj = new $class_name(null, $this->cur_ref_id, true, false);
-                    $this->gui_obj->setCreationMode(true);
+        $cmd = $this->ctrl->getCmd("forward");
+
+        //echo "<br>cmd:$cmd:nextclass:$next_class:-".$_GET["cmdClass"]."-".$_GET["cmd"]."-";
+        switch ($next_class) {
+            default:
+
+                // forward all other classes to gui commands
+                if ($next_class != "" && $next_class !== "iladministrationgui") {
+                    $class_path = $this->ctrl->lookupClassPath($next_class);
+                    if (is_file($class_path)) {
+                        require_once $class_path;   // note: org unit plugins still need the require
+                    }
+                    // get gui class instance
+                    $class_name = $this->ctrl->getClassForClasspath($class_path);
+                    if (($next_class === "ilobjrolegui" || $next_class === "ilobjusergui"
+                        || $next_class === "ilobjroletemplategui")) {
+                        if ($this->requested_obj_id > 0) {
+                            $this->gui_obj = new $class_name(null, $this->requested_obj_id, false, false);
+                            $this->gui_obj->setCreationMode(false);
+                        } else {
+                            $this->gui_obj = new $class_name(null, $this->cur_ref_id, true, false);
+                            $this->gui_obj->setCreationMode(true);
+                        }
+                    } else {
+                        if ($objDefinition->isPlugin(ilObject::_lookupType($this->cur_ref_id, true))) {
+                            $this->gui_obj = new $class_name($this->cur_ref_id);
+                        } else {
+                            if (!$this->creation_mode) {
+                                if (is_subclass_of($class_name, "ilObject2GUI")) {
+                                    $this->gui_obj = new $class_name($this->cur_ref_id, ilObject2GUI::REPOSITORY_NODE_ID);
+                                } else {
+                                    //$this->cur_ref_id=224;
+                                    //dump($this->cur_ref_id);exit();
+
+                                    $this->gui_obj = new $class_name(null, $this->cur_ref_id, true, false);
+                                }
+                            } else {
+                                if (is_subclass_of($class_name, "ilObject2GUI")) {
+                                    //dump("putada2");exit();
+                                    $this->gui_obj = new $class_name(null, ilObject2GUI::REPOSITORY_NODE_ID, $this->cur_ref_id);
+                                } else {
+
+                                    $this->gui_obj = new $class_name("", 0, true, false);
+                                }
+                            }
+                        }
+                        $this->gui_obj->setCreationMode($this->creation_mode);
+                    }
+                    $this->gui_obj->setAdminMode($this->admin_mode);
+                    $tabs_out = true;
+                    $ilHelp->setScreenIdComponent(ilObject::_lookupType($this->cur_ref_id, true));
+                    $this->showTree();
+
+                    $this->ctrl->setReturn($this, "return");
+                    $ret = $this->ctrl->forwardCommand($this->gui_obj);
+                    $html = $this->gui_obj->getHTML();
+
+                    if ($html != "") {
+                        $this->tpl->setVariable("OBJECTS", $html);
+                    }
+                    $this->tpl->printToStdout();
+                } else {	//
+                    $cmd = $this->ctrl->getCmd("forward");
+                    $this->$cmd();
                 }
             } else {
                 if ($this->obj_definition->isPlugin(ilObject::_lookupType($this->cur_ref_id, true))) {

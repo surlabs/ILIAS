@@ -65,7 +65,7 @@ class ilLTIConsumeProviderFormGUI extends ilPropertyFormGUI
      * @return string                  rendered HTML to embed in a form/custom input
      */
     private function buildDlUiParts(
-        string $target_gui_class = ilLTIConsumeProviderSettingsGUI::class,
+        array $target_gui_class = [ilLTIConsumeProviderSettingsGUI::class],
         string $cmd = 'startDeepLinking'
     ): string {
         global $DIC;
@@ -74,8 +74,19 @@ class ilLTIConsumeProviderFormGUI extends ilPropertyFormGUI
         $renderer = $DIC->ui()->renderer();
         $ctrl = $DIC->ctrl();
 
+        if ($this->isAdminContext()) {
+            $target_gui_class = [
+                ilAdministrationGUI::class,
+                ilObjLTIConsumerGUI::class,
+                ilLTIConsumerSettingsGUI::class,
+                ilLTIConsumeProviderSettingsGUI::class
+            ];
+
+            $ctrl->setParameterByClass(ilLTIConsumerSettingsGUI::class, 'ref_id', ilObjLTIConsumer::getRefIdOfConsumerByDeploymentId((string)$this->getProvider()->getId()));
+        }
+
         $iframe_url = $ctrl->getLinkTargetByClass(
-            [ilAdministrationGUI::class, $target_gui_class],
+            $target_gui_class,
             $cmd,
             '',
             true
@@ -197,6 +208,15 @@ class ilLTIConsumeProviderFormGUI extends ilPropertyFormGUI
         if ($this->provider->getId() == 0) {
             $lti13->setInfo($lng->txt('lti_con_version_1.3_before_id'));
         }
+
+        if (!empty($this->provider->isContentItem())) {
+
+            $dl_html = $this->buildDlUiParts();
+            $dl_input = new ilCustomInputGUI($this->lng->txt('tab_content'));
+            $dl_input->setHTML($dl_html);
+            $lti13->addSubItem($dl_input);
+        }
+
         $versionInp->addOption($lti13);
         $providerUrlInp = new ilTextInputGUI($lng->txt('lti_con_tool_url'), 'provider_url13');
         $providerUrlInp->setValue($this->provider->getProviderUrl());
