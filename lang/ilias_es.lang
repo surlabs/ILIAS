@@ -16722,6 +16722,7 @@ survey#:#survey_execution_sure_finish#:#¿Estás seguro de que quieres finalizar
 survey#:#survey_existing_pool#:#Usar banco de preguntas existente
 survey#:#survey_finish#:#Finalizar encuesta
 survey#:#survey_finished#:#La encuesta ha finalizado. ¡Gracias por su participación!
+survey#:#survey_from_x_points#:#Desde X Puntos
 survey#:#survey_has_datasets_warning#:#La encuesta ya contiene conjuntos de datos. No puede editar las preguntas de la encuesta hasta que elimine dichos datos en la sección mantenimiento.
 survey#:#survey_has_datasets_warning_page_view#:#La encuesta ya contiene datos. No puede editar las preguntas de la encuesta hasta que se eliminen estos resultados.
 survey#:#survey_has_datasets_warning_page_view_link#:#Editar participantes
@@ -16797,7 +16798,6 @@ survey#:#survey_sync_insufficient_permissions#:#Permisos insuficientes
 survey#:#survey_sync_question_copies#:#Sincronizar copias de preguntas
 survey#:#survey_sync_question_copies_info#:#Las preguntas seleccionadas serán reemplazadas por la versión actual del banco de preguntas
 survey#:#survey_sync_success#:#Las preguntas seleccionadas se han actualizado
-survey#:#survey_up_to_x_points#:#Hasta x puntos
 survey#:#survey_use_start_button#:#Debe entrar a la encuesta usando el botón comenzar
 survey#:#svy_activation_limited_visibility_info#:#Si se activa, la encuesta es visible incluso posteriormente a su disponibilidad.
 survey#:#svy_activation_online_info#:#Activar esta opción para que la encuesta sea accesible por los usuarios.
