@@ -22,7 +22,6 @@ namespace ILIAS\Survey\Settings;
 
 use ILIAS\Survey\InternalGUIService;
 use ILIAS\Survey\InternalDomainService;
-
 /**
  * @author Alexander Killing <killing@leifos.de>
  */
@@ -48,7 +47,8 @@ class UIFactory
             $this->domain_service,
             $object_service,
             $survey,
-            $mode_ui_modifier
+            $mode_ui_modifier,
+            new \ilSvyStandardPurifier()
         );
     }
 
