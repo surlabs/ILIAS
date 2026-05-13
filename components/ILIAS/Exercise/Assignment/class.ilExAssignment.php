@@ -341,6 +341,10 @@ class ilExAssignment
     public function getInstructionPresentation(): string
     {
         $inst = $this->getInstruction();
+
+        $purifier = new ilExcInstructionPurifier();
+        $inst = $purifier->purify($inst);
+
         if (trim($inst)) {
             $is_html = (strlen($inst) != strlen(strip_tags($inst)));
             if (!$is_html) {
@@ -760,7 +764,8 @@ class ilExAssignment
             "max_char_limit" => array("integer", $this->getMaxCharLimit()),
             "relative_deadline" => array("integer", $this->getRelativeDeadline()),
             "rel_deadline_last_subm" => array("integer", $this->getRelDeadlineLastSubmission()),
-            "deadline_mode" => array("integer", $this->getDeadlineMode())
+            "deadline_mode" => array("integer", $this->getDeadlineMode()),
+            "solution_rid" => array("text", ''),
             ));
         $this->setId($next_id);
         $exc = new ilObjExercise($this->getExerciseId(), false);
