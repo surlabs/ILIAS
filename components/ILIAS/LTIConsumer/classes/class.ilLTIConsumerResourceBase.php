@@ -151,10 +151,24 @@ abstract class ilLTIConsumerResourceBase
         $token = $this->getService()->checkTool();
         $logger->info("check Tool token: " . json_encode($token));
         $permittedScopes = $this->getService()->getPermittedScopes();
-        if (empty($scopes) || empty(array_intersect($permittedScopes, $scopes))) {
-            $logger->info("check Tool token setted to null: " . json_encode($token));
-            $token = null;
+
+        if ($token === null || empty($scopes) || empty(array_intersect($permittedScopes, $scopes))) {
+            return null;
         }
+
+        $tokenScope = $token->{'imsglobal.org.security.scope'} ?? '';
+        if (is_string($tokenScope)) {
+            $tokenScopes = preg_split('/\s+/', trim($tokenScope)) ?: [];
+        } elseif (is_array($tokenScope)) {
+            $tokenScopes = $tokenScope;
+        } else {
+            $tokenScopes = [];
+        }
+
+        if (empty(array_intersect($tokenScopes, $scopes))) {
+            return null;
+        }
+
         return $token;
     }
 }
