@@ -153,7 +153,6 @@ class ilLTIProviderObjectSettingGUI
         $this->tpl->setContent($form->getHTML());
     }
 
-
     /**
      * Init object settings form
      */
@@ -254,6 +253,7 @@ class ilLTIProviderObjectSettingGUI
             $tf = new ilTextInputGUI($this->lng->txt('lti_13_authentication_url'), 'authentication_url_' . $global_consumer->getExtConsumerId());
             $tf->setValue($active_consumer->authenticationUrl);
             $op1->addSubItem($tf);
+
             $version->addOption($op1);
 
             $op0 = new ilRadioOption($this->lng->txt("lti_obj_version_11"), LtiVersion::V1->value);
@@ -342,6 +342,7 @@ class ilLTIProviderObjectSettingGUI
                 } else {
                     $consumer->accessTokenUrl = '';
                 }
+
                 if ($form->getInput('authentication_url_' . $global_consumer->getExtConsumerId())) {
                     $consumer->authenticationUrl = $form->getInput('authentication_url_' . $global_consumer->getExtConsumerId());
                 } else {

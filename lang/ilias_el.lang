@@ -11216,6 +11216,7 @@ lti#:#conf_user_name_lastname_info#:#Sends Mister or Ms/Mrs. (unless otherwise s
 lti#:#conf_user_name_none#:#No one###07 02 2020 new variable
 lti#:#conf_user_name_none_info#:#Sends '-' instead of a name###07 02 2020 new variable
 lti#:#consumers#:#Consumers###31 08 2017 new variable
+lti#:#content_selection#:#Content selection###14 11 2025 new variable
 lti#:#description_info#:#The description will be shown below the title.###07 02 2020 new variable
 lti#:#field_provider_xml#:#XML-File###07 02 2020 new variable
 lti#:#field_provider_xml_info#:#Supported are XML-Files for Tool Consumer and for Common Cartridge according to https://www.imsglobal.org/specs/lti/xml.###07 02 2020 new variable
@@ -11271,7 +11272,7 @@ lti#:#lti_13_deployment_id#:#Deployment-ID###26 08 2024 new variable
 lti#:#lti_13_keyset_url#:#Public Keyset URL###21 05 2025 new variable
 lti#:#lti_13_platform_id#:#Platform-ID###26 08 2024 new variable
 lti#:#lti_13_step1#:#Step 1###26 08 2024 new variable
-lti#:#lti_13_step1_info#:#For the initiating platform (consumer), enter the following address for Launch URL, Initiate Login URL, Redirection URI, and Registration URL:###26 08 2024 new variable
+lti#:#lti_13_step1_info#:#For the initiating platform (consumer), enter the following address for Launch URL, Initiate Login URL, Deep Linking, Redirection URI, and Registration URL:###26 08 2024 new variable
 lti#:#lti_13_step2#:#Step 2###26 08 2024 new variable
 lti#:#lti_13_step2_info#:#You will receive information from the initiating platform (Consumer), which you must enter in the following fields. After saving, the LTI 1.3 functionalities are available.###26 08 2024 new variable
 lti#:#lti_13_token_url#:#Access Token URL###21 05 2025 new variable
@@ -11378,6 +11379,7 @@ lti#:#lti_create_lti_user_role#:#Create recommended global role for LTI users###
 lti#:#lti_cron_title#:#LTI Outcome Service###07 02 2020 new variable
 lti#:#lti_cron_title_desc#:#Synchronizes the learning progress of LTI users with the LTI consumer, if it supports the outcome service. This cron job is only required to transfer status updates after Learning progress settings updates.###07 02 2020 new variable
 lti#:#lti_custom_new#:#Create Own Provider Settings###07 02 2020 new variable
+lti#:#lti_deep_linking_not_available_for_admin_objects#:#Consumers created in Administration do not allow content selection
 lti#:#lti_delete_consume_provider#:#Delete Provider###07 02 2020 new variable
 lti#:#lti_delete_consume_providers#:#Delete Providers###07 02 2020 new variable
 lti#:#lti_delete_provider#:#Delete Provider###07 02 2020 new variable

@@ -995,6 +995,7 @@ class ilLTIConsumeProvider
      */
     protected function getInsertUpdateFields(): array
     {
+        // dump($this->getProviderUrl());exit();
         return array(
             'id' => array('integer', $this->getId()),
             'title' => array('text', $this->getTitle()),

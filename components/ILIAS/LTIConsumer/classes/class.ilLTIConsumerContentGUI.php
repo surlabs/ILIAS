@@ -65,6 +65,17 @@ class ilLTIConsumerContentGUI
         $this->{$command}();
     }
 
+    public function getJwtForContentSelection(string $redirectUri, string $clientId, int $deploymentId, string $nonce, ?array $additionalArguments = null): string
+    {
+        $jwt = "";
+        $this->initCmixUser();
+        $jwtArray = $this->getLaunchParametersLTI13($redirectUri, $clientId, $deploymentId, $nonce, $additionalArguments);
+        if (isset($jwtArray['id_token'])) {
+            $jwt = $jwtArray['id_token'];
+        }
+        return $jwt;
+    }
+
     /**
      * @throws ilCtrlException
      * @throws ilTemplateException
@@ -258,7 +269,6 @@ class ilLTIConsumerContentGUI
             document.getElementById("lti_launch_form").style.display = "none";
             document.getElementById("lti_launched").style.display = "inline";
         }</script>';
-        //dump($output);exit();
         return($output);
     }
 

@@ -49,26 +49,152 @@ $nonce = $data['nonce'] ?? '';
 $ltiMessageHint = $data['lti_message_hint'] ?? '';
 $loginHint = $data['login_hint'] ?? '';
 
+$isDlMode = false;
 $hint = null;
 $deploymentId = null;
 $provider_id = 0;
 $childRefId = 0;
 $refId = 0;
 
+if (
+    $scope === 'openid' &&
+    $responseType === 'id_token' &&
+    $redirectUri !== '' &&
+    $clientId !== ''
+) {
+    $provider_id = ilLTIConsumeProvider::getProviderIdFromClientId($clientId);
+    $provider = ilLTIConsumeProvider::getInstance($provider_id);
+
+    $hint = sanitizeJson($ltiMessageHint);
+    if ($provider->getContentItemUrl() == $redirectUri && isset($hint['deployment_id'])) {
+
+        $isDlMode = true;
+        $deploymentId = (int) $hint['deployment_id'];
+        $childRefId = ilObjLTIConsumer::getRefIdOfConsumerByDeploymentId((string) $deploymentId);
+        $refId = $DIC->repositoryTree()->getParentId($childRefId);
+    }
+
+}
+
+if ($isDlMode) {
+    $now = time();
+    $ctrl = $DIC->ctrl();
+
+    $iframe_url = ilObjLTIConsumer::getPlattformId() . '/ltidlreturn.php?provider_id=' . $provider_id
+        . '&ref_id=' . $refId
+        . '&new_type=lti';
+
+    $iss = ilObjLTIConsumer::getPlattformId();
+    $sub = $loginHint !== '' ? $loginHint : ilCmiXapiUser::getIdentAsId($this->getProvider()->getPrivacyIdent(), $DIC->user());
+    $payload = [
+        'iss' => $iss,
+        'aud' => $clientId,
+        'iat' => $now,
+        'exp' => $now + 600,
+        'nonce' => $nonce ?: bin2hex(random_bytes(8)),
+        'sub' => $sub,
+
+        'https://purl.imsglobal.org/spec/lti/claim/roles' => [
+            'http://purl.imsglobal.org/vocab/lis/v2/membership#Administrator',
+            'http://purl.imsglobal.org/vocab/lis/v2/membership#ContentDeveloper',
+            'http://purl.imsglobal.org/vocab/lis/v2/membership#Instructor',
+            'http://purl.imsglobal.org/vocab/lis/v2/membership#Learner',
+            'http://purl.imsglobal.org/vocab/lis/v2/membership#Mentor',
+            'http://purl.imsglobal.org/vocab/lis/v2/membership#Manager',
+            'http://purl.imsglobal.org/vocab/lis/v2/membership#Member',
+            'http://purl.imsglobal.org/vocab/lis/v2/membership#Officer',
+            'http://purl.imsglobal.org/vocab/lis/v2/membership#Instructor',
+        ],
+        'https://purl.imsglobal.org/spec/lti/claim/message_type' => 'LtiDeepLinkingRequest',
+        'https://purl.imsglobal.org/spec/lti/claim/version' => '1.3.0',
+
+    ];
+
+    if (isset($deploymentId)) {
+        $payload['https://purl.imsglobal.org/spec/lti/claim/deployment_id'] = (string) $deploymentId;
+    }
+
+    $payload['https://purl.imsglobal.org/spec/lti-dl/claim/deep_linking_settings'] = [
+        'deep_link_return_url' => $iframe_url,
+        'accept_types' => ['ltiResourceLink'],
+        'accept_presentation_document_targets' => ['iframe', 'window', 'frame'],
+        'accept_multiple' => true
+    ];
+
+    $payload['https://purl.imsglobal.org/spec/lti/claim/tool_platform'] = [
+        'name' => 'ILIAS',
+        'version' => ILIAS_VERSION_NUMERIC ?? 'unknown',
+        'product_family_code' => 'ilias',
+    ];
+
+    $objLtiConsumer = new ilObjLTIConsumer($childRefId);
+    $consumerContentGui = new ilLTIConsumerContentGUI($objLtiConsumer);
+    $jwt = $consumerContentGui->getJwtForContentSelection($redirectUri, $clientId, $deploymentId, $nonce, $payload);
+
+    $redirSafe = htmlspecialchars($redirectUri, ENT_QUOTES);
+    $stateSafe = htmlspecialchars($state, ENT_QUOTES);
+    $jwtSafe = htmlspecialchars($jwt, ENT_QUOTES);
+    echo <<<HTML
+<!doctype html>
+<html><body onload="document.forms[0].submit()">
+  <form action="{$redirSafe}" method="post" enctype="application/x-www-form-urlencoded">
+    <input type="hidden" name="id_token" value="{$jwtSafe}">
+    <input type="hidden" name="state" value="{$stateSafe}">
+    <noscript><button type="submit">Continue</button></noscript>
+  </form>
+</body></html>
+HTML;
+    exit;
+}
 
 if (empty($ltiMessageHint)) {
     $DIC->http()->saveResponse(
         $DIC->http()->response()->withStatus(400)
     );
+    $DIC->http()->sendResponse();
+    $DIC->http()->close();
+    exit;
+}
+
+ilSession::set('lti13_login_data', $data);
+
+if ($isDlMode) {
+    if ($deploymentId === null || $refId <= 0) {
+        $DIC->http()->saveResponse(
+            $DIC->http()->response()->withStatus(400)
+        );
+        $DIC->http()->sendResponse();
+        $DIC->http()->close();
+        exit;
+    }
+
+    $DIC->ctrl()->setParameterByClass(ilObjLTIConsumerGUI::class, 'new_type', 'lti');
+    $DIC->ctrl()->setParameterByClass(ilObjLTIConsumerGUI::class, 'provider_id', (string) $deploymentId);
+    $DIC->ctrl()->setParameterByClass(ilObjLTIConsumerGUI::class, 'ref_id', (string) $refId);
+    $url = $DIC->ctrl()->getLinkTargetByClass([ilRepositoryGUI::class, ilObjLTIConsumerGUI::class], 'contentSelectionRequest');
+
+    $response = $DIC->http()->response()
+        ->withStatus(302)
+        ->withAddedHeader('Location', $url);
+
+    $sessionCookieHeader = buildSameSiteNoneSessionCookieHeader();
+    if ($sessionCookieHeader !== null) {
+        $response = $response->withAddedHeader('Set-Cookie', $sessionCookieHeader);
+    }
+
+    $DIC->http()->saveResponse($response);
+
     try {
         $DIC->http()->sendResponse();
         $DIC->http()->close();
     } catch (\ILIAS\HTTP\Response\Sender\ResponseSendingException $e) {
         $DIC->http()->close();
     }
+
+    exit;
 }
 
-$parts = explode(":", $ltiMessageHint);
+$parts = explode(":", $ltiMessageHint, 3);
 $isContentSelection = false;
 $ref_id = '';
 $il_client_id = '';
@@ -76,15 +202,16 @@ $redirect_uri = '';
 if (count($parts) === 2) {
     [$ref_id, $il_client_id] = $parts;
 } elseif (count($parts) === 3) {
-    [$first, $second, $third] = $parts;
-    $il_client_id = $third;
-    $ref_id = explode(",", $second)[0];
-} else {
     $isContentSelection = true;
     [$ref_id, $il_client_id, $redirect_uri] = $parts;
+} else {
+    $DIC->http()->saveResponse(
+        $DIC->http()->response()->withStatus(400)
+    );
+    $DIC->http()->sendResponse();
+    $DIC->http()->close();
+    exit;
 }
-
-ilSession::set('lti13_login_data', $data);
 
 if ($isContentSelection) {
     $url = "../../../" . base64_decode($redirect_uri);

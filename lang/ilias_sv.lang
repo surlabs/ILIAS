@@ -11215,6 +11215,7 @@ lti#:#conf_user_name_lastname_info#:#Sänder Mr eller Mrs (om inget annat anges)
 lti#:#conf_user_name_none#:#Ingen
 lti#:#conf_user_name_none_info#:#Skickar '-' istället för ett namn
 lti#:#consumers#:#konsumenter
+lti#:#content_selection#:#Content selection###14 11 2025 new variable
 lti#:#description_info#:#Beskrivningen visas under titeln.
 lti#:#field_provider_xml#:#XML-fil
 lti#:#field_provider_xml_info#:#XML-filer stöds för Tool Consumer och för Common Cartridge enligt https
@@ -11270,7 +11271,7 @@ lti#:#lti_13_deployment_id#:#ID för utplacering
 lti#:#lti_13_keyset_url#:#Public Keyset URL###21 05 2025 new variable
 lti#:#lti_13_platform_id#:#Platform ID
 lti#:#lti_13_step1#:#Steg 1
-lti#:#lti_13_step1_info#:#För den initierande plattformen (konsumenten), ange följande adress för Launch URL, Initiate Login URL, Redirection URI och Registration URL
+lti#:#lti_13_step1_info#:#För den initierande plattformen (konsumenten), ange följande adress för Launch URL, Initiate Login URL, Deep Linking, Redirection URI och Registration URL
 lti#:#lti_13_step2#:#Steg 2
 lti#:#lti_13_step2_info#:#Du kommer att få information från den initierande plattformen (konsumenten) som du måste ange i följande fält. Efter att ha sparat är LTI 1.3-funktionerna tillgängliga.
 lti#:#lti_13_token_url#:#Access Token URL###21 05 2025 new variable
@@ -11377,6 +11378,7 @@ lti#:#lti_create_lti_user_role#:#Skapa rekommenderad global roll för LTI-använ
 lti#:#lti_cron_title#:#LTI Utfallstjänst
 lti#:#lti_cron_title_desc#:#Överför LTI-användarnas inlärningsförlopp till den anropande plattformen. Detta cron-jobb behövs endast i de fall då inlärningsförloppet måste räknas om på grund av ändrade inställningar.
 lti#:#lti_custom_new#:#Skapa din egen leverantör eller verktygsinställningar
+lti#:#lti_deep_linking_not_available_for_admin_objects#:#Konsumenter som skapats i Administration tillåter inte val av innehåll
 lti#:#lti_delete_consume_provider#:#Ta bort leverantör eller verktyg
 lti#:#lti_delete_consume_providers#:#Ta bort leverantör eller verktyg
 lti#:#lti_delete_provider#:#Ta bort leverantör eller verktyg

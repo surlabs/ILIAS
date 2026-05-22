@@ -260,6 +260,8 @@ class ilAuthProviderLTI extends \ilAuthProvider implements \ilAuthProviderInterf
             ?? $this->messageParameters['lti_message_type']
             ?? '';
 
+        $isDeepLink = ($message_type === 'LtiDeepLinkingRequest');
+
         if (!$DIC->http()->wrapper()->post()->has('launch_presentation_return_url')) {
             $this->launchReturnUrl = $_COOKIE['launch_presentation_return_url'] ?? "";
             $this->logger->info("Catching launch_presentation_return_url from cookies" . $this->launchReturnUrl);
@@ -288,6 +290,33 @@ class ilAuthProviderLTI extends \ilAuthProvider implements \ilAuthProviderInterf
         if (!empty($this->messageParameters['custom_ilias_ref_id'])) {
             $this->ref_id = (int) $this->messageParameters['custom_ilias_ref_id'];
         }
+
+        if ($isDeepLink) {
+            $dl = $this->messageParameters['https://purl.imsglobal.org/spec/lti-dl/claim/deep_linking_settings'] ?? [];
+
+            ilSession::set('lti_dl_ctx', [
+                'iss' => (string) ($this->messageParameters['iss'] ?? ''), // platform issuer
+                'deployment_id' => (string) ($this->messageParameters['https://purl.imsglobal.org/spec/lti/claim/deployment_id'] ?? ''),
+                'deep_link_return_url' => (string) ($dl['deep_link_return_url'] ?? ''),
+                'data' => $dl['data'] ?? null,
+                'nonce' => $this->messageParameters['nonce'] ?? null
+            ]);
+
+            try {
+                $connector = new ilLTIDataConnector();
+                $extConsumerId = $platform->getExtConsumerId();
+                $active_consumer = ilLTIPlatform::fromGlobalSettingsAndRefId($extConsumerId, $this->ref_id, $connector);
+                $chosenRefId = (string) $active_consumer->getSetting('resource_dl_id', '');
+                if ($chosenRefId !== '') {
+                    ilSession::set('lti_dl_ref_id', $chosenRefId);
+                }
+            } catch (\Throwable $e) {
+                $this->getLogger()->error($e->getMessage());
+            }
+
+            ilSession::set('lti_dl_mode', true);
+        }
+
         $lti_context_ids = ilSession::get('lti_context_ids');
 
         if (isset($lti_context_ids) && is_array($lti_context_ids)) {

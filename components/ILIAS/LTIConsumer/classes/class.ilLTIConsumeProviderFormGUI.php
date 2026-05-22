@@ -57,9 +57,92 @@ class ilLTIConsumeProviderFormGUI extends ilPropertyFormGUI
         $this->adminContext = $adminContext;
     }
 
+    /**
+     * Build the "Deep linking" UI (button + modal with iframe).
+     *
+     * @param string $target_gui_class GUI class that has startDeepLinkingCmd()
+     * @param string $cmd command name, default 'startDeepLinking'
+     * @return string                  rendered HTML to embed in a form/custom input
+     */
+    private function buildDlUiParts(
+        array $target_gui_class = [ilLTIConsumeProviderSettingsGUI::class],
+        string $cmd = 'startDeepLinking'
+    ): string {
+        global $DIC;
+
+        $factory = $DIC->ui()->factory();
+        $renderer = $DIC->ui()->renderer();
+        $ctrl = $DIC->ctrl();
+
+        if ($this->isAdminContext()) {
+            $target_gui_class = [
+                ilAdministrationGUI::class,
+                ilObjLTIConsumerGUI::class,
+                ilLTIConsumerSettingsGUI::class,
+                ilLTIConsumeProviderSettingsGUI::class
+            ];
+
+            $ctrl->setParameterByClass(ilLTIConsumerSettingsGUI::class, 'ref_id', ilObjLTIConsumer::getRefIdOfConsumerByDeploymentId((string)$this->getProvider()->getId()));
+        }
+
+        $iframe_url = $ctrl->getLinkTargetByClass(
+            $target_gui_class,
+            $cmd,
+            '',
+            true
+        );
+
+        $iframe_html = sprintf(
+            '<iframe src="%s" style="width:100%%;height:70vh;border:0;" allow="fullscreen"></iframe>',
+            htmlspecialchars($iframe_url, ENT_QUOTES)
+        );
+
+        $content = $factory->legacy()->content($iframe_html);
+
+        $modal = $factory
+            ->modal()
+            ->roundtrip($this->lng->txt('subtab_provider_settings'), $content);
+
+        $button = $factory
+            ->button()
+            ->standard($this->lng->txt('select'), '')
+            ->withOnClick($modal->getShowSignal());
+
+        $html = $renderer->render([$button, $modal]);
+
+        $html .= <<<HTML
+        <script>
+        function closeDialog() {
+            let dlg = document.querySelector('dialog.c-modal.il-modal-roundtrip[open], dialog.c-modal[open]');
+            if (dlg && typeof dlg.close === 'function') {
+                dlg.close();
+            }
+            let backdrop = document.querySelector('.c-modal__backdrop, dialog + .c-modal__backdrop');
+            if (backdrop) {
+                backdrop.remove();
+            }
+
+        }
+        document.addEventListener('click', function (e) {
+            closeDialog();        
+           }, true);
+        
+        window.onLtiDeepLinkDone = function (url) {
+            closeDialog();
+            if(url) {
+                window.location.href = url;
+            }
+        };
+        </script>
+        HTML;
+
+        return $html;
+    }
+
     public function initForm(string $formaction, string $saveCmd, string $cancelCmd): void
     {
-        global $DIC; /* @var \ILIAS\DI\Container $DIC */
+        global $DIC;
+        /* @var \ILIAS\DI\Container $DIC */
         $lng = $DIC->language();
 
         $this->setFormAction($formaction);
@@ -125,6 +208,15 @@ class ilLTIConsumeProviderFormGUI extends ilPropertyFormGUI
         if ($this->provider->getId() == 0) {
             $lti13->setInfo($lng->txt('lti_con_version_1.3_before_id'));
         }
+
+        if (!empty($this->provider->isContentItem())) {
+
+            $dl_html = $this->buildDlUiParts();
+            $dl_input = new ilCustomInputGUI($this->lng->txt('tab_content'));
+            $dl_input->setHTML($dl_html);
+            $lti13->addSubItem($dl_input);
+        }
+
         $versionInp->addOption($lti13);
         $providerUrlInp = new ilTextInputGUI($lng->txt('lti_con_tool_url'), 'provider_url13');
         $providerUrlInp->setValue($this->provider->getProviderUrl());
@@ -151,15 +243,15 @@ class ilLTIConsumeProviderFormGUI extends ilPropertyFormGUI
         $publicKey = new ilTextAreaInputGUI($lng->txt('lti_con_key_type_rsa_public_key'), 'public_key');
         $publicKey->setRows(6);
         $publicKey->setValue($this->provider->getPublicKey());
-        $publicKey->setRequired(true);
         $publicKey->setInfo($lng->txt('lti_con_key_type_rsa_public_key_info'));
+        $publicKey->setRequired(true);
         $keyRsa->addSubItem($publicKey);
         //JWK
         $keyJwk = new ilRadioOption($lng->txt('lti_con_key_type_jwk'), 'JWK_KEYSET');
         $keyType->addOption($keyJwk);
         $keyset = new ilTextInputGUI($lng->txt('lti_con_key_type_jwk_url'), 'public_keyset');
         $keyset->setValue($this->provider->getPublicKeyset());
-        $keyset->setRequired(false);
+        $keyset->setRequired(true);
         $keyJwk->addSubItem($keyset);
 
         $keyType->setValue($this->provider->getKeyType());
@@ -449,7 +541,8 @@ class ilLTIConsumeProviderFormGUI extends ilPropertyFormGUI
 
     public function initToolConfigForm(string $formaction, string $saveCmd, string $cancelCmd): void
     {
-        global $DIC; /* @var \ILIAS\DI\Container $DIC */
+        global $DIC;
+        /* @var \ILIAS\DI\Container $DIC */
         $lng = $DIC->language();
 
         $this->setFormAction($formaction);
@@ -930,7 +1023,8 @@ class ilLTIConsumeProviderFormGUI extends ilPropertyFormGUI
 
     public function initDynRegForm(string $formaction): void
     {
-        global $DIC; /* @var \ILIAS\DI\Container $DIC */
+        global $DIC;
+        /* @var \ILIAS\DI\Container $DIC */
         $lng = $DIC->language();
         $this->setFormAction($formaction);
         $this->clearCommandButtons();
@@ -971,8 +1065,8 @@ class ilLTIConsumeProviderFormGUI extends ilPropertyFormGUI
         if (!empty($customParams)) {
             $regUrl .= "&custom_params=" . urlencode($customParams);
         }
-        $showToolConfigUrl = $DIC->ctrl()->getLinkTargetByClass([ilRepositoryGUI::class,ilObjLTIConsumerGUI::class], 'showToolConfig');
-        $regErrorUrl = $DIC->ctrl()->getLinkTargetByClass([ilRepositoryGUI::class,ilObjLTIConsumerGUI::class], 'addDynReg');
+        $showToolConfigUrl = $DIC->ctrl()->getLinkTargetByClass([ilRepositoryGUI::class, ilObjLTIConsumerGUI::class], 'showToolConfig');
+        $regErrorUrl = $DIC->ctrl()->getLinkTargetByClass([ilRepositoryGUI::class, ilObjLTIConsumerGUI::class], 'addDynReg');
         $this->getItemByPostVar('lti_dyn_reg_url')->setDisabled(true);
         $this->getItemByPostVar('lti_dyn_reg_custom_params')->setDisabled(true);
         $this->clearCommandButtons();
@@ -990,7 +1084,8 @@ class ilLTIConsumeProviderFormGUI extends ilPropertyFormGUI
 
     public function getDynRegError(): string
     {
-        global $DIC; /* @var \ILIAS\DI\Container $DIC */
+        global $DIC;
+        /* @var \ILIAS\DI\Container $DIC */
         $lng = $DIC->language();
         $this->removeItemByPostVar('lti_dyn_reg_url');
         $this->removeItemByPostVar('lti_dyn_reg_custom_params');

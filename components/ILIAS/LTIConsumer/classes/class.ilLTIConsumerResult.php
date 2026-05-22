@@ -115,6 +115,7 @@ class ilLTIConsumerResult
         $this->obj_id = (int) $data['obj_id'];
         $this->usr_id = (int) $data['usr_id'];
         $this->result = $data['result'] == null ? null : (float) $data['result'];
+        $this->attended = (bool) $data['attended'];
     }
 
     /**
