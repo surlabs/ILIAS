@@ -11377,6 +11377,7 @@ lti#:#lti_create_lti_user_role#:#Create recommended global role for LTI users###
 lti#:#lti_cron_title#:#Autoavaliação
 lti#:#lti_cron_title_desc#:#Densidade semântica
 lti#:#lti_custom_new#:#Create Own Provider Settings###07 02 2020 new variable
+lti#:#lti_deep_linking_not_available_for_admin_objects#:#Consumidores criados na Administração não permitem a seleção de conteúdo
 lti#:#lti_delete_consume_provider#:#Delete Provider###07 02 2020 new variable
 lti#:#lti_delete_consume_providers#:#Delete Providers###07 02 2020 new variable
 lti#:#lti_delete_provider#:#Delete Provider###07 02 2020 new variable
@@ -11386,6 +11387,7 @@ lti#:#lti_exit#:#Fechar sessão LTI
 lti#:#lti_exited#:#Sessão LTI fechada
 lti#:#lti_exited_info#:#Sessão LTI fechada com sucesso
 lti#:#lti_form_provider_create#:#Create Provider Settings###07 02 2020 new variable
+lti#:#lti_form_provider_content_selection#:#Seleção de conteúdo
 lti#:#lti_form_provider_edit#:#Edit Provider Settings###07 02 2020 new variable
 lti#:#lti_form_section_appearance#:#Options for launch###07 02 2020 new variable
 lti#:#lti_global_settings_form#:#Global Settings###07 02 2020 new variable

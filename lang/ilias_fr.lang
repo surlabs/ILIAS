@@ -11362,6 +11362,7 @@ lti#:#lti_create_lti_user_role#:#Create recommended global role for LTI users
 lti#:#lti_cron_title#:#LTI Outcome Service
 lti#:#lti_cron_title_desc#:#Synchronizes the learning progress of LTI users with the LTI consumer, if it supports the outcome service. This cron job is only required to transfer status updates after Learning progress settings updates.
 lti#:#lti_custom_new#:#Create Own Provider Settings
+lti#:#lti_deep_linking_not_available_for_admin_objects#:#Les consommateurs créés dans l'administration ne permettent pas la sélection de contenu
 lti#:#lti_delete_consume_provider#:#Delete Provider
 lti#:#lti_delete_consume_providers#:#Delete Providers
 lti#:#lti_delete_provider#:#Delete Provider
@@ -11371,6 +11372,7 @@ lti#:#lti_exit#:#Fermer session LTI
 lti#:#lti_exited#:#Session LTI fermée
 lti#:#lti_exited_info#:#Session LTI fermée avec succès
 lti#:#lti_form_provider_create#:#Create Provider Settings
+lti#:#lti_form_provider_content_selection#:#Sélection de contenu
 lti#:#lti_form_provider_edit#:#Edit Provider Settings
 lti#:#lti_form_section_appearance#:#Options for launch
 lti#:#lti_global_settings_form#:#Global Settings
