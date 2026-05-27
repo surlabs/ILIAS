@@ -11175,12 +11175,12 @@ lti#:#conf_privacy_ident_il_uuid_ext_account#:#External User ID combined with a 
 lti#:#conf_privacy_ident_il_uuid_ext_account_info#:#This is identical to each call, but may allow a direct conclusion about the user.###26 08 2024 new variable
 lti#:#conf_privacy_ident_il_uuid_login#:#ILIAS Login combined with a unique ILIAS platform id formatted as an E-Mail address###26 08 2024 new variable
 lti#:#conf_privacy_ident_il_uuid_login_info#:#Sends the login name. This is identical to each call, but may allow a direct conclusion about the ILIAS user.###26 08 2024 new variable
-lti#:#conf_privacy_ident_il_uuid_random#:#Random ID combined with a unique ILIAS platform ID formatted as an E-Mail address###21 05 2025 new variable
-lti#:#conf_privacy_ident_il_uuid_random_info#:#For each ILIAS object and ILIAS user a random ID is generated which remains identical for each call. Conclusions about a user are very limited because it is practically impossible to create user profiles across objects.###21 05 2025 new variable
-lti#:#conf_privacy_ident_il_uuid_sha256#:#Hash combined with a unique ILIAS platform id formatted as an E-Mail address###21 05 2025 new variable
-lti#:#conf_privacy_ident_il_uuid_sha256_info#:#This is identical to each call, but does not permit any direct conclusions about the ILIAS user.###21 05 2025 new variable
-lti#:#conf_privacy_ident_il_uuid_sha256url#:#Hash combined with the ILIAS Domain formatted as an E-Mail address.###21 05 2025 new variable
-lti#:#conf_privacy_ident_il_uuid_sha256url_info#:#This is identical to each call, with with a maximum of 80 characters significantly shorter than the variant with the ILIAS platform ID and allows only very limited conclusions about the ILIAS user.###21 05 2025 new variable
+lti#:#conf_privacy_ident_il_uuid_random#:#Random ID combined with a unique ILIAS platform ID formatted as an E-Mail address###04 12 2025 new variable
+lti#:#conf_privacy_ident_il_uuid_random_info#:#For each ILIAS object and ILIAS user a random ID is generated which remains identical for each call. Conclusions about a user are very limited because it is practically impossible to create user profiles across objects.###04 12 2025 new variable
+lti#:#conf_privacy_ident_il_uuid_sha256#:#Hash combined with a unique ILIAS platform id formatted as an E-Mail address###04 12 2025 new variable
+lti#:#conf_privacy_ident_il_uuid_sha256_info#:#This is identical to each call, but does not permit any direct conclusions about the ILIAS user.###04 12 2025 new variable
+lti#:#conf_privacy_ident_il_uuid_sha256url#:#Hash combined with the ILIAS Domain formatted as an E-Mail address.###04 12 2025 new variable
+lti#:#conf_privacy_ident_il_uuid_sha256url_info#:#This is identical to each call, with with a maximum of 80 characters significantly shorter than the variant with the ILIAS platform ID and allows only very limited conclusions about the ILIAS user.###04 12 2025 new variable
 lti#:#conf_privacy_ident_il_uuid_user_id#:#ILIAS user id combined with a unique ILIAS platform id formatted as an E-Mail address###26 08 2024 new variable
 lti#:#conf_privacy_ident_il_uuid_user_id_info#:#Sends the internal numeric user id. This is identical to each call, but may allow conclusions about the ILIAS user.###26 08 2024 new variable
 lti#:#conf_privacy_ident_info#:#Standard is frequently the email address. The unique ILIAS platform id is:###26 08 2024 new variable
@@ -11217,7 +11217,6 @@ lti#:#conf_user_name_lastname_info#:#Sends Mister or Ms/Mrs. (unless otherwise s
 lti#:#conf_user_name_none#:#No one###07 02 2020 new variable
 lti#:#conf_user_name_none_info#:#Sends '-' instead of a name###07 02 2020 new variable
 lti#:#consumers#:#Consumers###31 08 2017 new variable
-lti#:#content_selection#:#Content selection###14 11 2025 new variable
 lti#:#description_info#:#The description will be shown below the title.###07 02 2020 new variable
 lti#:#field_provider_xml#:#XML-File###07 02 2020 new variable
 lti#:#field_provider_xml_info#:#Supported are XML-Files for Tool Consumer and for Common Cartridge according to https://www.imsglobal.org/specs/lti/xml.###07 02 2020 new variable
@@ -11267,16 +11266,16 @@ lti#:#launched#:#Resource was already launched.###07 02 2020 new variable
 lti#:#learning_progress_options#:#Options for Learning Progress###07 02 2020 new variable
 lti#:#lm_only_one_download_per_type#:#Please note that you can only make one file per type (XML, HTML, SCORM) public accessible.###31 08 2017 new variable
 lti#:#lti13_hints#:#If the tool was created without dynamic registration, the following data must be entered for the tool to run.###26 08 2024 new variable
-lti#:#lti_13_authentication_url#:#Authentication Request URL###21 05 2025 new variable
+lti#:#lti_13_authentication_url#:#Authentication Request URL###04 12 2025 new variable
 lti#:#lti_13_client_id#:#Client-ID###26 08 2024 new variable
 lti#:#lti_13_deployment_id#:#Deployment-ID###26 08 2024 new variable
-lti#:#lti_13_keyset_url#:#Public Keyset URL###21 05 2025 new variable
+lti#:#lti_13_keyset_url#:#Public Keyset URL###04 12 2025 new variable
 lti#:#lti_13_platform_id#:#Platform-ID###26 08 2024 new variable
 lti#:#lti_13_step1#:#Step 1###26 08 2024 new variable
-lti#:#lti_13_step1_info#:#For the initiating platform (consumer), enter the following address for Launch URL, Initiate Login URL, Deep Linking, Redirection URI, and Registration URL:###26 08 2024 new variable
+lti#:#lti_13_step1_info#:#For the initiating platform (consumer), enter the following address for Launch URL, Initiate Login URL, Redirection URI, and Registration URL:###26 08 2024 new variable
 lti#:#lti_13_step2#:#Step 2###26 08 2024 new variable
 lti#:#lti_13_step2_info#:#You will receive information from the initiating platform (Consumer), which you must enter in the following fields. After saving, the LTI 1.3 functionalities are available.###26 08 2024 new variable
-lti#:#lti_13_token_url#:#Access Token URL###21 05 2025 new variable
+lti#:#lti_13_token_url#:#Access Token URL###04 12 2025 new variable
 lti#:#lti_action_accept_provider_as_global#:#Accept Provider as Global Provider for all Users###07 02 2020 new variable
 lti#:#lti_action_accept_providers_as_global#:#Accept Providers as Global###07 02 2020 new variable
 lti#:#lti_action_delete_providers#:#Delete Providers###07 02 2020 new variable
@@ -11290,8 +11289,8 @@ lti#:#lti_at_least_one_prov_has_usages#:#At least one provider could not be dele
 lti#:#lti_auth_failed_invalid_key#:#Authentication failed, no valid consumer key given.###31 08 2017 new variable
 lti#:#lti_con_content_item#:#Support for Deep Linking###26 08 2024 new variable
 lti#:#lti_con_content_item_url#:#Content URL###26 08 2024 new variable
-lti#:#lti_con_grade_synchronization#:#Advanced Grading Services###21 05 2025 new variable
-lti#:#lti_con_grade_synchronization_info#:#The LTI tool must offer 'Assignment and Grade Services'.###21 05 2025 new variable
+lti#:#lti_con_grade_synchronization#:#Assignment and Grade Services###04 12 2025 new variable
+lti#:#lti_con_grade_synchronization_info#:#The LTI tool must offer 'Assignment and Grade Services'.###04 12 2025 new variable
 lti#:#lti_con_initiate_login_url#:#Initiate Login URL###26 08 2024 new variable
 lti#:#lti_con_key_type#:#Public Key Type###26 08 2024 new variable
 lti#:#lti_con_key_type_jwk#:#URL (Json Web Token)###26 08 2024 new variable
@@ -11311,10 +11310,10 @@ lti#:#lti_con_prov_category_info#:#Category to filter entries when LTI Consumer 
 lti#:#lti_con_prov_custom_params#:#Custom Parameters for this specific Provider###07 02 2020 new variable
 lti#:#lti_con_prov_custom_params_info#:#Please enter them in the form param1=value1; param2=value2###07 02 2020 new variable
 lti#:#lti_con_prov_description#:#Description###07 02 2020 new variable
-lti#:#lti_con_prov_dyn_reg_params#:#Optional Parameters###21 05 2025 new variable
-lti#:#lti_con_prov_dyn_reg_params_info#:#Here, for example, references to target objects in the tool can be specified.###21 05 2025 new variable
-lti#:#lti_con_prov_dyn_reg_url#:#Registration URL of the Tool###21 05 2025 new variable
-lti#:#lti_con_prov_dyn_reg_url_info#:#Note: Not every tool supports dynamic registration.###21 05 2025 new variable
+lti#:#lti_con_prov_dyn_reg_params#:#Optional Parameters###04 12 2025 new variable
+lti#:#lti_con_prov_dyn_reg_params_info#:#Here, for example, references to target objects in the tool can be specified.###04 12 2025 new variable
+lti#:#lti_con_prov_dyn_reg_url#:#Registration URL of the Tool###04 12 2025 new variable
+lti#:#lti_con_prov_dyn_reg_url_info#:#Note: Not every tool supports dynamic registration.###04 12 2025 new variable
 lti#:#lti_con_prov_external_provider#:#External Provider###07 02 2020 new variable
 lti#:#lti_con_prov_external_provider_info#:#A hint will be shown to users when dealing with an external Provider. An external Provider is characterized by insufficient influence on the Provider by the operator of the ILIAS-installation. This is the case when there are no rights to delete.###07 02 2020 new variable
 lti#:#lti_con_prov_group_options#:#Options to group and filter Providers###07 02 2020 new variable
@@ -11359,7 +11358,7 @@ lti#:#lti_con_prov_xapi_launch_secret_info#:#&nbsp;###07 02 2020 new variable
 lti#:#lti_con_prov_xapi_launch_url#:#URL of LRS Endpoint###07 02 2020 new variable
 lti#:#lti_con_prov_xapi_launch_url_info#:#Please add full URL with https://###07 02 2020 new variable
 lti#:#lti_con_redirection_uris#:#Redirection URI###26 08 2024 new variable
-lti#:#lti_con_tool_url#:#Login URL###26 08 2024 new variable
+lti#:#lti_con_tool_url#:#Launch URL###26 08 2024 new variable
 lti#:#lti_con_version#:#LTI Version###26 08 2024 new variable
 lti#:#lti_con_version_1.1#:#Version 1.1###26 08 2024 new variable
 lti#:#lti_con_version_1.3#:#Version 1.3###26 08 2024 new variable
@@ -11380,12 +11379,10 @@ lti#:#lti_create_lti_user_role#:#Create recommended global role for LTI users###
 lti#:#lti_cron_title#:#LTI Outcome Service###07 02 2020 new variable
 lti#:#lti_cron_title_desc#:#Synchronizes the learning progress of LTI users with the LTI consumer, if it supports the outcome service. This cron job is only required to transfer status updates after Learning progress settings updates.###07 02 2020 new variable
 lti#:#lti_custom_new#:#Create Own Provider Settings###07 02 2020 new variable
-lti#:#lti_deep_linking_not_available_for_admin_objects#:#Consumers created in Administration do not allow content selection
 lti#:#lti_delete_consume_provider#:#Delete Provider###07 02 2020 new variable
 lti#:#lti_delete_consume_providers#:#Delete Providers###07 02 2020 new variable
 lti#:#lti_delete_provider#:#Delete Provider###07 02 2020 new variable
-lti#:#lti_dyn_reg_add_tool#:#Add###21 05 2025 new variable
-lti#:#lti_dynamic_registration#:#Create Own Settings for Tool with Dynamic Registration (LTI 1.3)###21 05 2025 new variable
+lti#:#lti_dynamic_registration#:#Create Own Settings for Tool with Dynamic Registration (LTI 1.3)###04 12 2025
 lti#:#lti_edit_consumer#:#Edit LTI Consumer###31 08 2017 new variable
 lti#:#lti_exit#:#Close LTI Session###31 08 2017 new variable
 lti#:#lti_exited#:#LTI Session closed###31 08 2017 new variable
@@ -11413,7 +11410,7 @@ lti#:#lti_object_consumer#:#LTI Consumers###31 08 2017 new variable
 lti#:#lti_object_release_settings_form#:#LTI Freigaben bearbeiten###31 08 2017 new variable
 lti#:#lti_provider#:#LTI-Freigaben###31 08 2017 new variable
 lti#:#lti_provider_not_avail_msg#:#LTI Provider is set to 'Not Available'###07 02 2020 new variable
-lti#:#lti_provider_not_set_msg#:#Configuration of LTI Provider / tool is not completely finished.###18 07 2025 new variable
+lti#:#lti_provider_not_set_msg#:#Configuration of LTI Provider / tool is not completely finished.###29 10 2025 new variable
 lti#:#lti_providing_tab#:#ILIAS as LTI Provider###07 02 2020 new variable
 lti#:#lti_released_objects#:#Objekt-Freigaben###31 08 2017 new variable
 lti#:#lti_select_provider#:#Select Provider###07 02 2020 new variable
@@ -11441,6 +11438,7 @@ lti#:#subtab_certificate#:#Certificate###07 02 2020 new variable
 lti#:#subtab_object_settings#:#Object Settings###07 02 2020 new variable
 lti#:#subtab_provider_settings#:#LTI Provider Settings###07 02 2020 new variable
 lti#:#tab_content#:#Content###07 02 2020 new variable
+lti#:#tab_grade_synchronization#:#Gradebook
 lti#:#tab_info#:#Info###07 02 2020 new variable
 lti#:#tab_scoring#:#Ranking###07 02 2020 new variable
 lti#:#tab_settings#:#Settings###07 02 2020 new variable

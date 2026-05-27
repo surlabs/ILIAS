@@ -11163,38 +11163,38 @@ lso#:#table_sequence_content#:#Tartalomkezelés
 lso#:#table_title#:#Cím
 lso#:#unparticipate#:#Leiratkozás
 lti#:#act_lti_for_obj_type#:#Objektumtípusra LTI aktiválása
-lti#:#activity_id#:#AktivításID
-lti#:#activity_id_info#:#Ezt az AktivításID-t használja az LTI Kiszolgáló, hogy azonosítsa a Statement-eket.
+lti#:#activity_id#:#Activity ID
+lti#:#activity_id_info#:#This Activity ID is used by the LTI Kiszolgáló to identify Statements.
 lti#:#auth_lti#:#LTI-hitelesítés
-lti#:#conf_privacy_ident#:#Felhasználói azonosítás
-lti#:#conf_privacy_ident_il_uuid_SHA256#:#Hash és az egyedi ILIAS platform id e-mail cím formátumban.
-lti#:#conf_privacy_ident_il_uuid_SHA256_info#:#Ez azonosítja az összes hívást, de nem lehet belőle következtetni felhasználóra.
-lti#:#conf_privacy_ident_il_uuid_ext_account#:#A külső user id és az egyedi ILIAS platform id e-mail cím formátumban.
-lti#:#conf_privacy_ident_il_uuid_ext_account_info#:#Ez azonosítja az összes hívást, de esetleg következtetni enged a felhasználóra.
-lti#:#conf_privacy_ident_il_uuid_login#:#Az ILIAS felhasználónév és az egyedi ILIAS platform id e-mail cím formátumban.
-lti#:#conf_privacy_ident_il_uuid_login_info#:#A felhasználónevet küldjük. Ez azonosítja az összes hívást, de esetleg következtetni enged az ILIAS felhasználóra.
-lti#:#conf_privacy_ident_il_uuid_random#:#Véletlen id és az egyedi ILIAS platform id e-mail cím formátumban.
-lti#:#conf_privacy_ident_il_uuid_random_info#:#Az összes ILIAS objektum és az összes ILIAS felhasználó számára egy véletlen azonosítót generálunk minden híváskor, így a felhasználóval kapcsolatos következtetések nagyon korlátozottak lesznek, mert gyakorlatilag lehetetlen objektumokra hivatkozó felhasználói profilokat létrehozni.
-lti#:#conf_privacy_ident_il_uuid_sha256#:#Hash és az egyedi ILIAS platform id e-mail cím formátumban.
-lti#:#conf_privacy_ident_il_uuid_sha256_info#:#Ez azonosítja az összes hívást, de nem lehet belőle következtetni felhasználóra.
-lti#:#conf_privacy_ident_il_uuid_sha256url#:#Hash és az egyedi ILIAS domainnel e-mail cím formátumban.
-lti#:#conf_privacy_ident_il_uuid_sha256url_info#:#Ez azonosítja az összes hívást, legfeljebb 80 karakterrel lényegesen rövidebb, mint az ILIAS platformazonosítójú változat, és csak nagyon korlátozott következtetéseket tesz lehetővé a felhasználóról.
-lti#:#conf_privacy_ident_il_uuid_user_id#:#Az ILIAS user id és az egyedi ILIAS platform id e-mail cím formátumban.
-lti#:#conf_privacy_ident_il_uuid_user_id_info#:#Ez azonosítja az összes hívást, de nem enged következtetni az ILIAS felhasználóra.
-lti#:#conf_privacy_ident_info#:#A standard gyakran az e-mail cím. Az egyedi ILIAS platformazonosítója:
-lti#:#conf_privacy_ident_real_email#:#E-mail cím
-lti#:#conf_privacy_ident_real_email_info#:#A felhasználó e-mail címét küldi azonosításként (Figyelmezetés: egy e-mail címet több felhasználó is használhat!)
-lti#:#conf_privacy_name#:#Felhasználó neve
-lti#:#conf_privacy_name_firstname#:#Utónév
-lti#:#conf_privacy_name_firstname_info#:#A felhasználó utónevét küldjük
-lti#:#conf_privacy_name_fullname#:#Teljes név
-lti#:#conf_privacy_name_fullname_info#:#A titulust, a családi és az utónevet is küldjük
-lti#:#conf_privacy_name_info#:#A felhasználó névének küldése általában nem szükséges.
-lti#:#conf_privacy_name_lastname#:#Titulus és családnév
-lti#:#conf_privacy_name_lastname_info#:#Asszony vagy Úr megszólítást (eltérő rendelkezés hiányában) és a családnevet küldjük
-lti#:#conf_privacy_name_none#:#Semmi
-lti#:#conf_privacy_name_none_info#:#'-'-et küldjük a név helyett
-lti#:#conf_user_ident#:#Felhasználó azaonsítása
+lti#:#conf_privacy_ident#:#User identification###26 08 2024 new variable
+lti#:#conf_privacy_ident_il_uuid_SHA256#:#Hash combined with a unique ILIAS platform id formatted as an E-Mail address###26 08 2024 new variable
+lti#:#conf_privacy_ident_il_uuid_SHA256_info#:#This is identical to each call, but does not permit any direct conclusions about the ILIAS user.###26 08 2024 new variable
+lti#:#conf_privacy_ident_il_uuid_ext_account#:#External User ID combined with a unique ILIAS platform id formatted as an E-Mail address###26 08 2024 new variable
+lti#:#conf_privacy_ident_il_uuid_ext_account_info#:#This is identical to each call, but may allow a direct conclusion about the user.###26 08 2024 new variable
+lti#:#conf_privacy_ident_il_uuid_login#:#ILIAS Login combined with a unique ILIAS platform id formatted as an E-Mail address###26 08 2024 new variable
+lti#:#conf_privacy_ident_il_uuid_login_info#:#Sends the login name. This is identical to each call, but may allow a direct conclusion about the ILIAS user.###26 08 2024 new variable
+lti#:#conf_privacy_ident_il_uuid_random#:#Random ID combined with a unique ILIAS platform ID formatted as an E-Mail address###04 12 2025 new variable
+lti#:#conf_privacy_ident_il_uuid_random_info#:#For each ILIAS object and ILIAS user a random ID is generated which remains identical for each call. Conclusions about a user are very limited because it is practically impossible to create user profiles across objects.###04 12 2025 new variable
+lti#:#conf_privacy_ident_il_uuid_sha256#:#Hash combined with a unique ILIAS platform id formatted as an E-Mail address###04 12 2025 new variable
+lti#:#conf_privacy_ident_il_uuid_sha256_info#:#This is identical to each call, but does not permit any direct conclusions about the ILIAS user.###04 12 2025 new variable
+lti#:#conf_privacy_ident_il_uuid_sha256url#:#Hash combined with the ILIAS Domain formatted as an E-Mail address.###04 12 2025 new variable
+lti#:#conf_privacy_ident_il_uuid_sha256url_info#:#This is identical to each call, with with a maximum of 80 characters significantly shorter than the variant with the ILIAS platform ID and allows only very limited conclusions about the ILIAS user.###04 12 2025 new variable
+lti#:#conf_privacy_ident_il_uuid_user_id#:#ILIAS user id combined with a unique ILIAS platform id formatted as an E-Mail address###26 08 2024 new variable
+lti#:#conf_privacy_ident_il_uuid_user_id_info#:#Sends the internal numeric user id. This is identical to each call, but may allow conclusions about the ILIAS user.###26 08 2024 new variable
+lti#:#conf_privacy_ident_info#:#Standard is frequently the email address. The unique ILIAS platform id is:###26 08 2024 new variable
+lti#:#conf_privacy_ident_real_email#:#E-Mail Address###26 08 2024 new variable
+lti#:#conf_privacy_ident_real_email_info#:#Sends E-Mail Address of user as identification (Warning: an E-Mail Address might be used by multiple users!)###26 08 2024 new variable
+lti#:#conf_privacy_name#:#User name###26 08 2024 new variable
+lti#:#conf_privacy_name_firstname#:#First name###26 08 2024 new variable
+lti#:#conf_privacy_name_firstname_info#:#Sends the first name of the user name from ILIAS###26 08 2024 new variable
+lti#:#conf_privacy_name_fullname#:#Entire name###26 08 2024 new variable
+lti#:#conf_privacy_name_fullname_info#:#Sends title, first name and last name###26 08 2024 new variable
+lti#:#conf_privacy_name_info#:#Sending an user name is usually not required.###26 08 2024 new variable
+lti#:#conf_privacy_name_lastname#:#Title and last name###26 08 2024 new variable
+lti#:#conf_privacy_name_lastname_info#:#Sends Mister or Ms/Mrs. (unless otherwise specified) and the last name###26 08 2024 new variable
+lti#:#conf_privacy_name_none#:#No one###26 08 2024 new variable
+lti#:#conf_privacy_name_none_info#:#Sends '-' instead of a name###26 08 2024 new variable
+lti#:#conf_user_ident#:#Felhasználói azonosítás
 lti#:#conf_user_ident_il_uuid_ext_account#:#A külső user id és az egyedi ILIAS platform id e-mail cím formátumban.
 lti#:#conf_user_ident_il_uuid_ext_account_info#:#Ez azonosítja az összes hívást, de esetleg következtetni enged a felhasználóra.
 lti#:#conf_user_ident_il_uuid_login#:#Az ILIAS felhasználónév és az egyedi ILIAS platform id e-mail cím formátumban.
@@ -11203,7 +11203,7 @@ lti#:#conf_user_ident_il_uuid_user_id#:#Az ILIAS user id és az egyedi ILIAS pla
 lti#:#conf_user_ident_il_uuid_user_id_info#:#Ez azonosítja az összes hívást, de nem enged következtetni az ILIAS felhasználóra.
 lti#:#conf_user_ident_info#:#A standard gyakran az e-mail cím. Az egyedi ILIAS platformazonosítója:
 lti#:#conf_user_ident_real_email#:#E-mail cím
-lti#:#conf_user_ident_real_email_info#:#A felhasználó e-mail címét küldi azonosításként (Figyelmezetés: egy e-mail címet több felhasználó is használhat!)
+lti#:#conf_user_ident_real_email_info#:#A felhasználó e-mail címét küldi azonosításként (Figyelem: egy e-mail címet több felhasználó is használhat!)
 lti#:#conf_user_name#:#Felhasználó neve
 lti#:#conf_user_name_firstname#:#Utónév
 lti#:#conf_user_name_firstname_info#:#A felhasználó utónevét küldjük
@@ -11215,154 +11215,153 @@ lti#:#conf_user_name_lastname_info#:#Asszony vagy Úr megszólítást (eltérő 
 lti#:#conf_user_name_none#:#Semmi
 lti#:#conf_user_name_none_info#:#'-'-et küldjük a név helyett
 lti#:#consumers#:#Fogyasztók
-lti#:#content_selection#:#Content selection###14 11 2025 new variable
-lti#:#description_info#:#A leírás a cím alatt jelenik meg.
-lti#:#field_provider_xml#:#XML-Fájl
-lti#:#field_provider_xml_info#:#Eszközfogyasztók és Common Cartridge támogatásához XML-fájlok a https://www.imsglobal.org/specs/lti/xml szerint.
-lti#:#form_import_provider#:#Globális Kiszolgáló importálása
-lti#:#gbl_roles_to_users#:#LTI-felhasználókhoz rendelt globális szerepkör
-lti#:#global_provider_subtab#:#Globális Kiszolgálók az összes felhasználó számára
-lti#:#grade_activity_progress_all#:#összes állapotinformáció
-lti#:#grade_activity_progress_completed#:#Befejezte
-lti#:#grade_activity_progress_initialized#:#Initializált
-lti#:#grade_activity_progress_inprogress#:#Folyamatban
-lti#:#grade_activity_progress_started#:#Elkezdve
-lti#:#grade_activity_progress_submitted#:#Beküldött
-lti#:#grade_grading_progress_all#:#Az értékelési folyamat össze információja
-lti#:#grade_grading_progress_failed#:#Az értékelési folyamat nem befejeződött be (Sikertelen)
-lti#:#grade_grading_progress_fullygraded#:#Az értékelési folyamat befejeződött
-lti#:#grade_grading_progress_notready#:#Nincs értékelési folyamat
-lti#:#grade_grading_progress_pending#:#A végső értékelés kialakítása függőben
-lti#:#grade_grading_progress_pendingmanual#:#A végső értékelés kialakítása függőben; kézi beavatkozást igényel
-lti#:#highscore_achieved_ts#:#Dátum
-lti#:#highscore_achieved_ts_description#:#A rangsorban megjelenik a dátumot eredményeket tartalmazó oszlop.
-lti#:#highscore_all_tables#:#Résztvevő saját és top rangsora
-lti#:#highscore_all_tables_description#:#A résztvevők tájékoztatást kapnak a legjobb helyezésekről és saját pozíciójukról a rangsorban.
-lti#:#highscore_description#:#A többi felhasználó neve megjelenik, ha az 'A többi felhasználó tanulási tapasztalatának megtekintése' jogosultsággl bír.
-lti#:#highscore_enabled#:#Helyezés
-lti#:#highscore_mode#:#Mód
-lti#:#highscore_own_table#:#Résztvevő saját helyezése
-lti#:#highscore_own_table_description#:#A résztvevők láthatják a rangsorban elfoglalt helyüket.
-lti#:#highscore_percentage#:#Százalék
-lti#:#highscore_percentage_description#:#A rangsorban megjelenik a százalékos eredményeket tartalmazó oszlop.
-lti#:#highscore_score#:#Pontszám
-lti#:#highscore_score_description#:#A rangsorban megjelenik a pontszámokat tartalmazó oszlop.
-lti#:#highscore_top_num#:#Legjobb helyezések száma
-lti#:#highscore_top_num_description#:#A legjobbak rangsorában megjelenő résztvevők számát határozza meg.
-lti#:#highscore_top_num_unit#:#bejegyzések
-lti#:#highscore_top_table#:#Legjobb helyezések
-lti#:#highscore_top_table_description#:#A résztvevők a legjobb helyezéseket tartalmazó táblázatban jelennek meg.
-lti#:#highscore_wtime#:#Időtartam
-lti#:#highscore_wtime_description#:#A rangsorban megjelenik az időtartamot tartalmazó oszlop.
-lti#:#launch_method#:#Indítás beállításai
+lti#:#description_info#:#The description will be shown below the title.
+lti#:#field_provider_xml#:#XML-File
+lti#:#field_provider_xml_info#:#Supported are XML-Files for Tool Fogyasztók and for Common Cartridge according to https://www.imsglobal.org/specs/lti/xml.
+lti#:#form_import_provider#:#Import Global Kiszolgáló
+lti#:#gbl_roles_to_users#:#LTI-felhasználókhoz rendelt globális szerep
+lti#:#global_provider_subtab#:#Global Kiszolgálók for all Users
+lti#:#grade_activity_progress_all#:#All Information on Activity Progress###26 08 2024 new variable
+lti#:#grade_activity_progress_completed#:#Completed###26 08 2024 new variable
+lti#:#grade_activity_progress_initialized#:#Initialized###26 08 2024 new variable
+lti#:#grade_activity_progress_inprogress#:#In Progress###26 08 2024 new variable
+lti#:#grade_activity_progress_started#:#Started###26 08 2024 new variable
+lti#:#grade_activity_progress_submitted#:#Submitted###26 08 2024 new variable
+lti#:#grade_grading_progress_all#:#All Information on Grading Progress###26 08 2024 new variable
+lti#:#grade_grading_progress_failed#:#The Grading could not complete (Failed)###26 08 2024 new variable
+lti#:#grade_grading_progress_fullygraded#:#The Grading Process is completed###26 08 2024 new variable
+lti#:#grade_grading_progress_notready#:#No Grading Process is occurring (NotReady)###26 08 2024 new variable
+lti#:#grade_grading_progress_pending#:#Final Grade is pending###26 08 2024 new variable
+lti#:#grade_grading_progress_pendingmanual#:#Final Grade is pending; requires Human Intervention###26 08 2024 new variable
+lti#:#highscore_achieved_ts#:#Date
+lti#:#highscore_achieved_ts_description#:#A column containing the date will be included in the ranking.
+lti#:#highscore_all_tables#:#Participant's Own Rank and Top Ranking
+lti#:#highscore_all_tables_description#:#Participants get information about the top ranking and their own position in the ranking.
+lti#:#highscore_description#:#The names of other users could be displayed if the right 'A többi felhasználó tanulási tapasztalatának megtekintése' is set.
+lti#:#highscore_enabled#:#Ranking
+lti#:#highscore_mode#:#Mode
+lti#:#highscore_own_table#:#Participant's Own Rank
+lti#:#highscore_own_table_description#:#Participants are advised of their own position in the ranking.
+lti#:#highscore_percentage#:#Percentage
+lti#:#highscore_percentage_description#:#A column containing the score as percentage will be included in the ranking.
+lti#:#highscore_score#:#Score
+lti#:#highscore_score_description#:#A column containing the score will be included in the ranking.
+lti#:#highscore_top_num#:#Length of Top Ranking
+lti#:#highscore_top_num_description#:#Specify how many ranks are to be included in the top ranking list.
+lti#:#highscore_top_num_unit#:#entries
+lti#:#highscore_top_table#:#Top Ranking
+lti#:#highscore_top_table_description#:#Participants are presented with a table containing the top rankings.
+lti#:#highscore_wtime#:#Duration
+lti#:#highscore_wtime_description#:#A column containing the duration will be included in the ranking.
+lti#:#launch_method#:#Options for Launch
 lti#:#launch_method_embedded#:#Beágyazott tartalom
-lti#:#launch_method_embedded_info#:#A tartalom az ILIAS környezetben nyílik meg. Beágyazott tartalomként jelenik meg a tartalom lapon.
+lti#:#launch_method_embedded_info#:#The content is opened within the ILIAS context. It is presented as embedded content within the content tab.
 lti#:#launch_method_new_win#:#Új ablak
-lti#:#launch_method_new_win_info#:#A tartalom új ablakban nyílik meg. A tartalom elhagyásakor ez az ablak bezárul.
+lti#:#launch_method_new_win_info#:#The content is opened in a new window. When leaving the content this window gets closed.
 lti#:#launch_method_own_win#:#Saját ablak
-lti#:#launch_method_own_win_info#:#A tartalom ugyanabban az ablakban nyílik meg, és helyettesíti az ILIAS képernyőt. A tartalom elhagyásakor a felhasználó visszatér az ILIAS-hoz.
-lti#:#launched#:#Az erőforrás már elindult.
-lti#:#learning_progress_options#:#Tanulási haladás beállításai
-lti#:#lm_only_one_download_per_type#:#Típusonként (XML, HTML, SCORM) csak egy fájlt lehet nyilvánosan elérhető.
-lti#:#lti13_hints#:#Ha az eszközt dinamikus regisztráció nélkül hozták létre, akkor az alábbi adatokat kell megadni az eszköz futtatásához.
-lti#:#lti_13_authentication_url#:#Hitelesítési kérelem URL-je
-lti#:#lti_13_client_id#:#Kliens-ID
-lti#:#lti_13_deployment_id#:#Telepítés-ID
-lti#:#lti_13_keyset_url#:#Nyilvános kulcskészlet URL-je
-lti#:#lti_13_platform_id#:#Platform-ID
-lti#:#lti_13_step1#:#1. lépés
-lti#:#lti_13_step1_info#:#A kezdeményező platform (fogyasztó) esetében adja meg a következő címet az Indítási URL-hez, a Bejelentkezési URL-címhez, az Átirányítási URI-hez és a Regisztrációs URL-hez:
-lti#:#lti_13_step2#:#2. lépés
-lti#:#lti_13_step2_info#:#A kezdeményező platformtól (Fogyasztó) kap információkat, amelyeket a következő mezőkbe kell beírnia. Mentés után elérhetők az LTI 1.3 funkciói.
-lti#:#lti_13_token_url#:#Hozzáférési token URL-je
-lti#:#lti_action_accept_provider_as_global#:#A Kiszolgáló elfogadás mint Global Kiszolgáló az összes felhasználó számára
-lti#:#lti_action_accept_providers_as_global#:#Kiszolgálók elfogadás mint Globális
-lti#:#lti_action_delete_providers#:#Kiszolgálós törlése
+lti#:#launch_method_own_win_info#:#The content is opened in the same window and replaces the ILIAS Screen. When leaving the content the user returns to ILIAS.
+lti#:#launched#:#Resource was already launched.
+lti#:#learning_progress_options#:#Options for Learning Progress
+lti#:#lm_only_one_download_per_type#:#Kérjük, ügyeljen arra, hogy típusonként (XML, HTML, SCORM) csak egy fájlt tegyen nyilvánosan elérhetővé.
+lti#:#lti13_hints#:#If the tool was created without dynamic registration, the following data must be entered for the tool to run.###26 08 2024 new variable
+lti#:#lti_13_authentication_url#:#Authentication Request URL###04 12 2025 new variable
+lti#:#lti_13_client_id#:#Client-ID###26 08 2024 new variable
+lti#:#lti_13_deployment_id#:#Deployment-ID###26 08 2024 new variable
+lti#:#lti_13_keyset_url#:#Public Keyset URL###04 12 2025 new variable
+lti#:#lti_13_platform_id#:#Platform-ID###26 08 2024 new variable
+lti#:#lti_13_step1#:#Step 1###26 08 2024 new variable
+lti#:#lti_13_step1_info#:#For the initiating platform (consumer), enter the following address for Launch URL, Initiate Login URL, Redirection URI, and Registration URL:###26 08 2024 new variable
+lti#:#lti_13_step2#:#Step 2###26 08 2024 new variable
+lti#:#lti_13_step2_info#:#You will receive information from the initiating platform (Consumer), which you must enter in the following fields. After saving, the LTI 1.3 functionalities are available.###26 08 2024 new variable
+lti#:#lti_13_token_url#:#Access Token URL###04 12 2025 new variable
+lti#:#lti_action_accept_provider_as_global#:#Accept Kiszolgáló as Global Kiszolgáló for all Users
+lti#:#lti_action_accept_providers_as_global#:#Accept Kiszolgálók as Global
+lti#:#lti_action_delete_providers#:#Delete Kiszolgálós
 lti#:#lti_action_edit_provider#:#Edit Kiszolgáló
 lti#:#lti_action_reset_provider_to_user_scope#:#Reset Kiszolgáló as User Defined Kiszolgáló
 lti#:#lti_action_reset_providers_to_user_scope#:#Reset Kiszolgálók as User Defined
-lti#:#lti_add_global_provider#:#Globális Kiszolgáló hozzáadása az összes felhasználónak
-lti#:#lti_add_own_provider#:#Saját Kiszolgáló létrehozása (nem az összes felhasználónak)
+lti#:#lti_add_global_provider#:#Add Global Kiszolgáló for all Users
+lti#:#lti_add_own_provider#:#Add Own Kiszolgáló (not for all Users)
 lti#:#lti_admin#:#LTI-rendszergazda
 lti#:#lti_at_least_one_prov_has_usages#:#At least one provider could not be deleted because this provider has usages (might be in trash).
 lti#:#lti_auth_failed_invalid_key#:#A hitelesítés sikertelen, nem jó a fogyasztói kulcs.
-lti#:#lti_con_content_item#:#Deep Linking támogatása##XXX
-lti#:#lti_con_content_item_url#:#Tartalom URL
-lti#:#lti_con_grade_synchronization#:#Fejlett Osztályozási Szolgáltatás
-lti#:#lti_con_grade_synchronization_info#:#Az LTI-eszköznek fel kell ajánlania 'Hozzárendelési és Osztályozási Szolgáltatások'.
-lti#:#lti_con_initiate_login_url#:#Bejelentkezési URL inicializálása
-lti#:#lti_con_key_type#:#Nyilvános kulcs típusa
-lti#:#lti_con_key_type_jwk#:#URL (Json Web Token)
-lti#:#lti_con_key_type_jwk_url#:#URL
-lti#:#lti_con_key_type_rsa#:#RSA-kulcs
-lti#:#lti_con_key_type_rsa_public_key#:#Nyilvános kulcs
-lti#:#lti_con_key_type_rsa_public_key_info#:#Ide illessze be az eszköz (szolgáltató) által biztosított PEM formátumú kulcsot.
-lti#:#lti_con_prov_always_learner#:#Az LTI-felhasználó mindig tanuló
-lti#:#lti_con_prov_always_learner_info#:#Az ILIAS szerepköre általában LTI-szerepre van leképezve. A kurzusvezetők több joguk lehetne a Kiszolgálóban, például kezelni az objektumot. Kapcsolja be ezt a lehetősget a szerepleképezés elkerüléséhez.
-lti#:#lti_con_prov_authentication#:#Hitelesítés
-lti#:#lti_con_prov_availability#:#Elérhetőség
-lti#:#lti_con_prov_availability_create#:#Újonan létrehozott objektumok esetén
-lti#:#lti_con_prov_availability_existing#:#Csak már létező objektumok esetén
-lti#:#lti_con_prov_availability_non#:#nem érhető el
-lti#:#lti_con_prov_category#:#Kategória
-lti#:#lti_con_prov_category_info#:#Bejegyzések szűrésére LTI-Fogyasztói objektumok létrehozáskor.
-lti#:#lti_con_prov_custom_params#:#Egyéni paraméter a megadott Kiszolgálóhoz
-lti#:#lti_con_prov_custom_params_info#:#Adja meg a követező formátumban: param1=value1; param2=value2
-lti#:#lti_con_prov_description#:#Leírás
-lti#:#lti_con_prov_dyn_reg_params#:#Opcionális paraméterek
-lti#:#lti_con_prov_dyn_reg_params_info#:#Itt adhatók meg például hivatkozás az eszközben lévő célobjektumokra.
-lti#:#lti_con_prov_dyn_reg_url#:#Az eszköz regisztrációs URL-je
-lti#:#lti_con_prov_dyn_reg_url_info#:#Megjegyzés: Nem minden eszköz támogatja a dinamikus regisztrációt.
+lti#:#lti_con_content_item#:#Support for Deep Linking###26 08 2024 new variable
+lti#:#lti_con_content_item_url#:#Content URL###26 08 2024 new variable
+lti#:#lti_con_grade_synchronization#:#Assignment and Grade Services###04 12 2025 new variable
+lti#:#lti_con_grade_synchronization_info#:#The LTI tool must offer 'Assignment and Grade Services'.###04 12 2025 new variable
+lti#:#lti_con_initiate_login_url#:#Initiate Login URL###26 08 2024 new variable
+lti#:#lti_con_key_type#:#Public Key Type###26 08 2024 new variable
+lti#:#lti_con_key_type_jwk#:#URL (Json Web Token)###26 08 2024 new variable
+lti#:#lti_con_key_type_jwk_url#:#URL###26 08 2024 new variable
+lti#:#lti_con_key_type_rsa#:#RSA-Key###26 08 2024 new variable
+lti#:#lti_con_key_type_rsa_public_key#:#Public Key###26 08 2024 new variable
+lti#:#lti_con_key_type_rsa_public_key_info#:#Insert the key provided by the tool (provider) in PEM format here.###26 08 2024 new variable
+lti#:#lti_con_prov_always_learner#:#LTI User is always Learner
+lti#:#lti_con_prov_always_learner_info#:#Usually the role in ILIAS is mapped to a LTI role. Course Administrators could have more rights in the Kiszolgáló, e.g. to manipulate the object. Activate this option to avoid the Role Mapping.
+lti#:#lti_con_prov_authentication#:#Authentication
+lti#:#lti_con_prov_availability#:#Availability
+lti#:#lti_con_prov_availability_create#:#For Creating Objects
+lti#:#lti_con_prov_availability_existing#:#Only for existing Objects
+lti#:#lti_con_prov_availability_non#:#not available
+lti#:#lti_con_prov_category#:#Category
+lti#:#lti_con_prov_category_info#:#Category to filter entries when LTI Consumer Object is created.
+lti#:#lti_con_prov_custom_params#:#Custom Parameters for this specific Kiszolgáló
+lti#:#lti_con_prov_custom_params_info#:#Please enter them in the form param1=value1; param2=value2
+lti#:#lti_con_prov_description#:#Description
+lti#:#lti_con_prov_dyn_reg_params#:#Optional Parameters###04 12 2025 new variable
+lti#:#lti_con_prov_dyn_reg_params_info#:#Here, for example, references to target objects in the tool can be specified.###04 12 2025 new variable
+lti#:#lti_con_prov_dyn_reg_url#:#Registration URL of the Tool###04 12 2025 new variable
+lti#:#lti_con_prov_dyn_reg_url_info#:#Note: Not every tool supports dynamic registration.###04 12 2025 new variable
 lti#:#lti_con_prov_external_provider#:#Küldő kiszolgáló
-lti#:#lti_con_prov_external_provider_info#:#Tipp jelenik meg a felhasználók számára, amikor külső Kiszolgálóval dogoznak. A külső Kiszolgálót az jellemzi, hogy az ILIAS-telepítés üzemeltetője nem tud kellőképpen befolyást gyakorolni a Kiszolgálóra. Ebben az esetben például nincs törlési jogsultsága.
-lti#:#lti_con_prov_group_options#:#Kiszolgálók csopoprtosításának és szűrésének lehetőségei
-lti#:#lti_con_prov_has_outcome_service#:#Kiszolgáló támogatja a Kimeneti Szolgáltatást
-lti#:#lti_con_prov_has_outcome_service_info#:#Ha a Kiszolgáló támogatja az LTI Kimeneti Szolgáltatást, a tanulási haladást be lehet kapocsolni. A Kiszolgáló 0 és 1 közötti értéket ad vissza a tanulási haladásról.
-lti#:#lti_con_prov_hints#:#Tippek
-lti#:#lti_con_prov_icon#:#Ikon
-lti#:#lti_con_prov_inc_usr_pic#:#A felhazsnáló képének küldése
-lti#:#lti_con_prov_inc_usr_pic_info#:#Az LTI fogyasztói objektum indításakor az ILIAS felhasználói képeire mutató hivatkozások szerepelnek.
-lti#:#lti_con_prov_instructor_email#:#Oktató e-mail címe
-lti#:#lti_con_prov_instructor_email_info#:##A korábban kiválasztott beállításoktól eltérően az e-mail cím név átkerülhet az oktatókhoz. Ehhez kurzus- vagy csoportvezetőnek kell lennie.
-lti#:#lti_con_prov_instructor_name#:#Oktató neve
-lti#:#lti_con_prov_instructor_name_info#:#A korábban kiválasztott beállításoktól eltérően a név átkerülhet az oktatókhoz.
-lti#:#lti_con_prov_key#:#Kulcs
-lti#:#lti_con_prov_keywords#:#Kulcsszavak
-lti#:#lti_con_prov_keywords_info#:#A kulcsszavakat pontoszvesszővel (;) kell elválasztani. A metaadatok közé automatikusan bekerülnek ezek a kulcsszavak.
-lti#:#lti_con_prov_launch_options#:#Indítási beállítások
-lti#:#lti_con_prov_learning_progress_options#:#Tanulási haladás beállításai
-lti#:#lti_con_prov_mastery_score_default#:#Alapértelmezett Kötelező Pontszám
-lti#:#lti_con_prov_mastery_score_default_info#:#A tanulási halaldást a Kiszolgáló Kimeneti Szolgáltatása és a kötelező pontszám küszöbértékel határozza meg.
+lti#:#lti_con_prov_external_provider_info#:#A hint will be shown to users when dealing with an external Kiszolgáló. An external Kiszolgáló is characterized by insufficient influence on the Kiszolgáló by the operator of the ILIAS-installation. This is the case when there are no rights to delete.
+lti#:#lti_con_prov_group_options#:#Options to group and filter Kiszolgálós
+lti#:#lti_con_prov_has_outcome_service#:#Kiszolgáló supports Outcome Service
+lti#:#lti_con_prov_has_outcome_service_info#:#If the LTI Outcome Service is supported, Learning Progress could be activated. The Kiszolgáló returns a value between 0 and 1 to indicate the Learning Progress.
+lti#:#lti_con_prov_hints#:#Hints
+lti#:#lti_con_prov_icon#:#Icon
+lti#:#lti_con_prov_inc_usr_pic#:#Send User Picture
+lti#:#lti_con_prov_inc_usr_pic_info#:#Links to ILIAS user pictures are included at launch of LTI consumer object.
+lti#:#lti_con_prov_instructor_email#:#Instructor E-Mail###26 08 2024 new variable
+lti#:#lti_con_prov_instructor_email_info#:#In difference to the previously selected settings, the e-mail address can be transferred for instructors. To do this, they must be course or group administrators.###26 08 2024 new variable
+lti#:#lti_con_prov_instructor_name#:#Instructor Name###26 08 2024 new variable
+lti#:#lti_con_prov_instructor_name_info#:#In difference to the previously selected settings, the name can be transferred for instructors.###26 08 2024 new variable
+lti#:#lti_con_prov_key#:#Key
+lti#:#lti_con_prov_keywords#:#Keywords
+lti#:#lti_con_prov_keywords_info#:#The keywords must be separated by a Semicolon (;). The Keywords are automatically taken to the Metadata as Keywords.
+lti#:#lti_con_prov_launch_options#:#Launch Options
+lti#:#lti_con_prov_learning_progress_options#:#Options for Learning Progress
+lti#:#lti_con_prov_mastery_score_default#:#Default Mastery Score
+lti#:#lti_con_prov_mastery_score_default_info#:#The Learning Progress will be evaluated from the Kiszolgáló Outcome Service and the mastery score threshold.
 lti#:#lti_con_prov_privacy_setting_conf#:#Beállítási lehetőségek
 lti#:#lti_con_prov_privacy_setting_default#:#Alapértelmezett beállítások, módosíthatók az objektumoknál
 lti#:#lti_con_prov_privacy_setting_force#:#Az objektumok beállításai nem módosíthatók
 lti#:#lti_con_prov_privacy_setting_info#:#Konfigurációs beállítások az adatvédelmi beállításokhoz
-lti#:#lti_con_prov_privacy_settings#:#Adatvédelmi beállítások
-lti#:#lti_con_prov_provider_key_global#:#Előre meghatározott Kulcs és Titok
-lti#:#lti_con_prov_provider_key_global_info#:#Ha nincs beállítva, a felhasználóknak hozzá kell adniuk a kulcsot és a titkot a szolgáltató használatához.
+lti#:#lti_con_prov_privacy_settings#:#Privacy Settings
+lti#:#lti_con_prov_provider_key_global#:#Predefined Key and Secret
+lti#:#lti_con_prov_provider_key_global_info#:#If not set, users have to add key and secret to use the provider.
 lti#:#lti_con_prov_remarks#:#Internal Remarks
-lti#:#lti_con_prov_secret#:#Titok
-lti#:#lti_con_prov_title#:#Cím
-lti#:#lti_con_prov_url#:#LTI kiszolgáló URL-je
-lti#:#lti_con_prov_use_provider_id#:#Kiszolgáló ID használata
-lti#:#lti_con_prov_use_provider_id_info#:#Általában az LTI-Fogyasztó Ref-Id-je átkerül a Kiszolgálóba. Néhány Kiszolgálók leképezi ezt a Ref-Id-t a Kiszolgáló erőforrásával. Ahhoz, hogy ezekhez a Kiszolgálókhoz mindig ugyanaz az Erőforrás legyen, ezt az opciót aktiválni kell.
-lti#:#lti_con_prov_use_xapi#:#Kiszolgáló támogatja az xAPI-Statements kéréseket
-lti#:#lti_con_prov_use_xapi_info#:#A kiszolgáló támogatja xAPI-Nyilatkozatokat
-lti#:#lti_con_prov_xapi_activity_id#:#Aktivitás ID
-lti#:#lti_con_prov_xapi_activity_id_info#:#A tevékenységazonosító szükséges ahhoz, hogy adatokat kérjen a LRS-ből. Csak akkor írjon be ide valamit, ha a szolgáltató erőforrásának tevékenységazonosítóhoz való hozzárendelése egyedi! Ha itt nem ad meg semmit, akkor a tevékenységazonosító beírható az LTI-fogyasztóba. A tevékenységazonosítót az LTI-Kiszolgálótól lehetett igényelni.
+lti#:#lti_con_prov_secret#:#Secret
+lti#:#lti_con_prov_title#:#Title
+lti#:#lti_con_prov_url#:#URL of Kiszolgáló
+lti#:#lti_con_prov_use_provider_id#:#Use Kiszolgáló ID
+lti#:#lti_con_prov_use_provider_id_info#:#Usually the Ref-Id of the LTI Consumer is transferred to the Kiszolgáló. Some Kiszolgálók map this Ref-Id with the Resource of the Kiszolgáló. To get always the same Resource for these Kiszolgálók this Option should be activated.
+lti#:#lti_con_prov_use_xapi#:#Kiszolgáló supports request of xAPI-Statements
+lti#:#lti_con_prov_use_xapi_info#:#A kiszolgáló támogatja xAPI-nyilatkozatokat
+lti#:#lti_con_prov_xapi_activity_id#:#Activity ID
+lti#:#lti_con_prov_xapi_activity_id_info#:#The Activity ID is necessary to request data from the Learning Record Store. Only enter something here if the assignment of the provider's resource to an Activity Id is unique! If nothing is entered here, the Activity Id can be entered in LTI Consumer. The Activity Id could be requested from the LTI Kiszolgáló.
 lti#:#lti_con_prov_xapi_launch_key#:#Az LRS-végpont kulcsa
 lti#:#lti_con_prov_xapi_launch_key_info#:#&nbsp;
-lti#:#lti_con_prov_xapi_launch_secret#:#LRS-végpont titka
+lti#:#lti_con_prov_xapi_launch_secret#:#Secret of LRS-végpont
 lti#:#lti_con_prov_xapi_launch_secret_info#:#&nbsp;
 lti#:#lti_con_prov_xapi_launch_url#:#Az LRS-végpont URL-je
-lti#:#lti_con_prov_xapi_launch_url_info#:#Adja meg a teljes, 'https://' kezdetű URL-t
-lti#:#lti_con_redirection_uris#:#Átirányitásai URI
-lti#:#lti_con_tool_url#:#Bejelentkezési URL
-lti#:#lti_con_version#:#LTI verzió
-lti#:#lti_con_version_1.1#:#1.1 verzió
-lti#:#lti_con_version_1.3#:#1.3 verzió
-lti#:#lti_con_version_1.3_before_id#:#Ha nem használunk dinamikus regisztrációt, az eszköz által kért adatok megadása után további adatok jelennek meg, amelyeket az eszközzel kell megadni.
-lti#:#lti_confirm_delete_providers#:#Biztos, hogy törli a következő kiszolgáló(ka)t?
+lti#:#lti_con_prov_xapi_launch_url_info#:#Please add full URL with https://
+lti#:#lti_con_redirection_uris#:#Redirection URI###26 08 2024 new variable
+lti#:#lti_con_tool_url#:#Launch URL###26 08 2024 new variable
+lti#:#lti_con_version#:#LTI Version###26 08 2024 new variable
+lti#:#lti_con_version_1.1#:#Version 1.1###26 08 2024 new variable
+lti#:#lti_con_version_1.3#:#Version 1.3###26 08 2024 new variable
+lti#:#lti_con_version_1.3_before_id#:#If dynamic registration is not used, after entering the data provided by the tool, additional data will appear that must be entered with the tool.###26 08 2024 new variable
+lti#:#lti_confirm_delete_providers#:#Are you sure that you want to delete the following provider(s)?
 lti#:#lti_consumer#:#Megosztva vele:
 lti#:#lti_consumer_created#:#A fogyasztót sikeresen létrehozta
 lti#:#lti_consumer_deleted#:#A fogyasztót sikeresen törölte
@@ -11371,111 +11370,110 @@ lti#:#lti_consumer_secret#:#Fogyasztótitok
 lti#:#lti_consumer_set_active#:#A fogyasztót sikeresen aktiválta
 lti#:#lti_consumer_set_inactive#:#A fogyasztót sikeresen deaktiválta
 lti#:#lti_consumer_updated#:#A fogyasztót sikeresen módosította
-lti#:#lti_consuming_tab#:#Az ILIAS mint LTI-Fogyasztó
-lti#:#lti_copy#:#Fogyasztók másolása
+lti#:#lti_consuming_tab#:#Az ILIAS, mint LTI Fogyasztó
+lti#:#lti_copy#:#Fogyasztók máasolása
 lti#:#lti_create_consumer#:#Fogyasztó létrehozása
-lti#:#lti_create_lti_user_role#:#LTI-felhasználónak ajánlott globális szerepkör létrehozása
+lti#:#lti_create_lti_user_role#:#LTI-felhasználónak ajánlott globális szerep létrehozása
 lti#:#lti_cron_title#:#LTI-kimeneti Szolgáltatás
 lti#:#lti_cron_title_desc#:#Az LTI-felhasználók tanulási haladási állapotát szinkronizálja egy LTI-eszközfogyasztóval, amennyiben az támogatja a kimeneti szolgáltatást. Erre az ütemezett feladatra csak a tanulási haladás beállításainak módosítása után van szükség.
-lti#:#lti_custom_new#:#Create Own Settings for Provider resp. Tool
-lti#:#lti_deep_linking_not_available_for_admin_objects#:#Az Adminisztrációban létrehozott fogyasztók nem teszik lehetővé a tartalom kiválasztását
+lti#:#lti_custom_new#:#Create Own Kiszolgáló Settings
 lti#:#lti_delete_consume_provider#:#Kiszolgáló törlése
 lti#:#lti_delete_consume_providers#:# Kiszolgálók törlése
-lti#:#lti_delete_provider#:#Kiszolgáló törlése
-lti#:#lti_dyn_reg_add_tool#:#Hozzáadás
-lti#:#lti_dynamic_registration#:#Az eszközhöz saját beállítások létrehozása dinamikus regisztrációval (LTI 1.3)
+lti#:#lti_delete_provider#:#Delete Kiszolgáló
+lti#:#lti_dynamic_registration#:#Create Own Settings for Tool with Dynamic Registration (LTI 1.3)###04 12 2025
 lti#:#lti_edit_consumer#:#LTI-fogyasztó módosítása
 lti#:#lti_exit#:#LTI-munkamenet lezárása
 lti#:#lti_exited#:#LTI-munkamenet lezárva
 lti#:#lti_exited_info#:#LTI-munkamenet sikeresen lezárult
-lti#:#lti_form_provider_create#:#Kiszolgáló beállításainak létrehozása
-lti#:#lti_form_provider_edit#:#Kiszolgáló beállításainak módosítása
-lti#:#lti_form_section_appearance#:#Indítás beállításai
-lti#:#lti_global_settings_form#:#Globális beállítások
-lti#:#lti_import_global_provider#:#Az összes felhasználó Globális Kiszolgálójának importálása XML-fájlba
-lti#:#lti_info_external_provider_info#:#A használatban lévő Kiszolgáló egy külső Kiszolgáló. A külső Kiszolgálót az jellemzi, hogy az ILIAS-telepítés üzemeltetője nem tud kellőképpen befolyást gyakorolni a Kiszolgálóra. Az ilyen esetben péládul nincs jogosultság az adatok törlésére.
-lti#:#lti_info_external_provider_label#:#A Kiszolgáló kiegészítő információi
-lti#:#lti_info_learning_progress_section#:#Információ a tanulási haladás meghatározásáról
-lti#:#lti_info_privacy_section#:#Tájékoztatás a szolgáltatónak induláskor továbbított személyes adatokról
+lti#:#lti_form_provider_create#:#Create Kiszolgáló Settings
+lti#:#lti_form_provider_edit#:#Edit Kiszolgáló Settings
+lti#:#lti_form_section_appearance#:#Options for launch
+lti#:#lti_global_settings_form#:#Global Settings
+lti#:#lti_import_global_provider#:#Import Global Kiszolgáló for all Users with XML-File
+lti#:#lti_info_external_provider_info#:#The used Kiszolgáló is an external Kiszolgáló. An external Kiszolgáló is characterized by insufficient influence on the Kiszolgáló by the operator of the ILIAS-Installation. This is the case e.g. if there are no rights to delete data.
+lti#:#lti_info_external_provider_label#:#Additional Info about this Kiszolgáló
+lti#:#lti_info_learning_progress_section#:#Info about Determination of the Learning Progress
+lti#:#lti_info_privacy_section#:#Info about personal data transmitted to the provider at launch
 lti#:#lti_launch_url#:#Url
 lti#:#lti_member#:#LTI-címke
 lti#:#lti_navigation#:#Navigáció
 lti#:#lti_no_provider_selected#:#No provider selected
 lti#:#lti_not_allowed#:#Hozzáférés megtagadva. Kérését átirányítjuk az LTI-objektum gyökérébe.
-lti#:#lti_obj_active#:#LTI-Kiszolgáltató/-Eszköz
-lti#:#lti_obj_active_info#:#Ez az objektum egy LTI-eszközszolgáltatóként működik. Új LTI-felhasználókat automatikusan hozzárendeljük az alábbi helyi szerepkörökhöz.
-lti#:#lti_obj_version#:#LTI Version
-lti#:#lti_obj_version_11#:#Version 1.1
-lti#:#lti_obj_version_13#:#Version 1.3
+lti#:#lti_obj_active#:#LTI-Eszközszolgáltató
+lti#:#lti_obj_active_info#:#Ha be van kapcsolva, ez az objektum egy LTI-eszközszolgáltatóként működik. Új LTI-felhasználókat automatikusan hozzárendeljük az alábbi helyi szerepekhez.
+lti#:#lti_obj_version#:#LTI Version###26 08 2024 new variable
+lti#:#lti_obj_version_11#:#Version 1.1###26 08 2024 new variable
+lti#:#lti_obj_version_13#:#Version 1.3###26 08 2024 new variable
 lti#:#lti_object_consumer#:#LTI-fogyasztók
 lti#:#lti_object_release_settings_form#:#LTI-megosztások módosítása
 lti#:#lti_provider#:#LTI-megosztások
-lti#:#lti_provider_not_avail_msg#:#Az LTI-kiszolgáló / -Eszköz értéke 'Nem érhető el'
-lti#:#lti_provider_not_set_msg#:#Az LTI-kiszolgáló / -eszköz beállítása még nem teljes.
+lti#:#lti_provider_not_avail_msg#:#Az LTI-kiszolgáló értéke 'Nem érhető el'
+lti#:#lti_provider_not_set_msg#:#Configuration of LTI Provider / tool is not completely finished.###29 10 2025 new variable
 lti#:#lti_providing_tab#:#Az ILIAS, mint LTI-Kiszolgáló
 lti#:#lti_released_objects#:#Megosztott objektumok
-lti#:#lti_select_provider#:#Válasszon Kiszolgáló resp. Eszközt
+lti#:#lti_select_provider#:#Válasszon Kiszolgálót
 lti#:#lti_session#:#LTI-munkamenet
 lti#:#lti_settings#:#LTI beállítások
 lti#:#lti_settings_form#:#Objektum beállításai
-lti#:#lti_success_accept_as_global#:#Sikeresen elfogadta mint a Globális Kiszolgálót az összes felhasználó számára
-lti#:#lti_success_accept_as_global_multi#:#Sikeresen elfogadta mint a Globális Kiszolgálót az összes felhasználó számára
-lti#:#lti_success_delete_provider#:#Sikeresen törölte
-lti#:#lti_success_reset_to_usr_def#:#Sikeresen resztelte mint a felhasználó által meghatározott Kiszolgálót
-lti#:#lti_success_reset_to_usr_def_multi#:#Sikeresen reszetelte mint a felhasználó által meghatározott Kiszolgálót
+lti#:#lti_success_accept_as_global#:#Successfully accepted as Global Kiszolgáló for all Users
+lti#:#lti_success_accept_as_global_multi#:#Successfully accepted as Global Kiszolgáló for all Users
+lti#:#lti_success_delete_provider#:#Successfully deleted
+lti#:#lti_success_reset_to_usr_def#:#Successfully reseted as User Defined Kiszolgáló
+lti#:#lti_success_reset_to_usr_def_multi#:#Successfully reseted as User Defined Kiszolgáló
 lti#:#lti_tutor#:#LTI-instruktor
-lti#:#lti_user_role_created#:#Az LTI-felhasználónak ajánlott globális szerepkört sikeresen létrehozta.
-lti#:#lti_user_role_info#:#Ajánlott globális szerepkör még nem létezik az LTI-felhasználónak. Ez a speciális szerepkör csak a Tartalomtár és kategóriák 'látható' jogosultságát tartalmazza.
-lti#:#mastery_score#:#Kötelező pontszám
-lti#:#mastery_score_info#:#A tanulási haladást a Kiszolgáló kimeneti szolgáltatása és a kötelező pontszám határozza meg.
-lti#:#obj_tile_image_info#:#Kép használata négyzet formában
-lti#:#online_info#:#Ez a lehetőség a felhasználók számárá láthatóvá és elérhetővé teszi az objektumot.
+lti#:#lti_user_role_created#:#Az LTI-felhasználónak ajánlott globális szerepet sikeresen létrehozta.
+lti#:#lti_user_role_info#:#Ajánlott globális szerep még nem létezik az LTI-felhasználónak. Ez a speciális szerep csak a Tartalomtár és kategóriák 'látható' jogosultáságát tartalmazza.
+lti#:#mastery_score#:#Mastery Score
+lti#:#mastery_score_info#:#The Learning Progress will be evaluated from the Kiszolgáló Outcome Service and the mastery score threshold.
+lti#:#obj_tile_image_info#:#Use an Image in Square Format
+lti#:#online_info#:#This makes the object visible and usable for the users.
 lti#:#prefix#:#Előtag
-lti#:#provider_info#:#Haszánaltban lévő Kiszolgáló
-lti#:#settings_subtab#:#Beállítások
-lti#:#show_statements#:#Tanulási tapasztalatok megjelenítése
-lti#:#show_statements_info#:#A többi felhasználó tanulási tapasztalat akkor jelenik meg, ha az 'A többi felhasználó tanulási tapasztalatának megtekintése' jogosultsággal rendelkezik.
+lti#:#provider_info#:#Used Kiszolgáló
+lti#:#settings_subtab#:#Settings
+lti#:#show_statements#:#Display Learning Experiences
+lti#:#show_statements_info#:#The Learning Experiences of other users could be displayed if the right 'A többi felhasználó tanulási tapasztalatának megtekintése' is set.
 lti#:#subtab_certificate#:#Tanúsítványok
-lti#:#subtab_object_settings#:#Objektum beállításai
-lti#:#subtab_provider_settings#:#Kiszolgáló resp. Eszköz beállításai
+lti#:#subtab_object_settings#:#Object Settings
+lti#:#subtab_provider_settings#:#LTI-kiszolgáló Settings
 lti#:#tab_content#:#Tartalom
+lti#:#tab_grade_synchronization#:#Gradebook
 lti#:#tab_info#:#Info
-lti#:#tab_scoring#:#Helyezés
+lti#:#tab_scoring#:#Ranking
 lti#:#tab_settings#:#Beállítások
-lti#:#tab_statements#:#Tanulási tapasztalatok
-lti#:#tbl_grade_activity_progress#:#Állapot választása
-lti#:#tbl_grade_actor#:#Felhasználó
-lti#:#tbl_grade_date#:#Dátum
-lti#:#tbl_grade_grading_progress#:#Értékelési folyamat
-lti#:#tbl_grade_period#:#Időszak
-lti#:#tbl_grade_score#:#Pont
-lti#:#tbl_grade_stored#:#Átküldve az ILIAS-nak
-lti#:#tbl_lti_prov_all_categories#:#Összes kategória
+lti#:#tab_statements#:#Learning Experiences
+lti#:#tbl_grade_activity_progress#:#Activity Progress###26 08 2024 new variable
+lti#:#tbl_grade_actor#:#User###26 08 2024 new variable
+lti#:#tbl_grade_date#:#Date###26 08 2024 new variable
+lti#:#tbl_grade_grading_progress#:#Grading Progress###26 08 2024 new variable
+lti#:#tbl_grade_period#:#Period###26 08 2024 new variable
+lti#:#tbl_grade_score#:#Score###26 08 2024 new variable
+lti#:#tbl_grade_stored#:#Transmitted to ILIAS###26 08 2024 new variable
+lti#:#tbl_lti_prov_all_categories#:#All Categories
 lti#:#tbl_lti_prov_availability#:#Elérhetőség
-lti#:#tbl_lti_prov_category#:#Kategória
+lti#:#tbl_lti_prov_category#:#Category
 lti#:#tbl_lti_prov_description#:#Leírás
-lti#:#tbl_lti_prov_icon#:#Ikon
+lti#:#tbl_lti_prov_icon#:#Icon
 lti#:#tbl_lti_prov_internal#:#Internal Kiszolgáló
-lti#:#tbl_lti_prov_keyword#:#Kulcsszó
-lti#:#tbl_lti_prov_keywords#:#Kulcsszavak
+lti#:#tbl_lti_prov_keyword#:#Keyword
+lti#:#tbl_lti_prov_keywords#:#Keywords
 lti#:#tbl_lti_prov_outcome#:#Outcome Service
-lti#:#tbl_lti_prov_own_provider#:#Saját Kiszolgáló
-lti#:#tbl_lti_prov_provider_creator#:#Létrehozó
-lti#:#tbl_lti_prov_title#:#A Kiszolgáló resp. Eszköz címe
-lti#:#tbl_lti_prov_usages#:#Használatok
-lti#:#tbl_lti_prov_usages_trashed#:#Lomtárhasználat
-lti#:#tbl_lti_prov_usages_untrashed#:#Tartalomtár-használat
+lti#:#tbl_lti_prov_own_provider#:#Own Kiszolgáló
+lti#:#tbl_lti_prov_provider_creator#:#Creator
+lti#:#tbl_lti_prov_title#:#Title of Kiszolgáló
+lti#:#tbl_lti_prov_usages#:#Usages
+lti#:#tbl_lti_prov_usages_trashed#:#Trashed Usages
+lti#:#tbl_lti_prov_usages_untrashed#:#Repository Usages
 lti#:#tbl_lti_prov_used_by#:#Kiszolgáló Used by Objects in Tree
 lti#:#tbl_lti_prov_with_key#:#Predefined with Key / Secret
-lti#:#tbl_provider_header#:#LTI-Kiszolgáló / Eszköz
-lti#:#tbl_provider_usage_header#:#LTI-Kiszolgáló / Eszköz
-lti#:#tbl_provider_usage_header_info#:#A kiszolgáló törlése előtt a lomtárat ki kell üríteni.
-lti#:#title_info#:#Adjon az objektumnak címet
-lti#:#usage_subtab#:#Használatban
+lti#:#tbl_provider_header#:#LTI Kiszolgáló
+lti#:#tbl_provider_usage_header#:#LTI Kiszolgáló
+lti#:#tbl_provider_usage_header_info#:#Before deleting providers, trashed usages must also be deleted.
+lti#:#title_info#:#Give the object a title.
+lti#:#usage_subtab#:#Használat
 lti#:#use_xapi#:#Use xAPI-Support
-lti#:#use_xapi_info#:#Ez az LTI-Kiszolgáló támogatja az xAPI-Nyilatkozatokat.
+lti#:#use_xapi_info#:#This LTI Kiszolgáló supports xAPI-Statements.
 lti#:#user_lng#:#Felhasználó nyelve
-lti#:#user_provider_subtab#:#Felhasználó által definiált Kiszolgálók
+lti#:#user_provider_subtab#:#Kiszolgálók Defined by Users
 ltiv#:#ltiv_create#:#Az LTI-Fogyasztóobjektumoknak tanúsítvány létrehozása
 ltiv#:#ltiv_create_info#:#Válassza ki a teljesített LTI-Fogyasztóobjektumot, melyhez tanúsítványt kíván generálni
 mail#:#back_to_folder#:#Vissza a mappához
