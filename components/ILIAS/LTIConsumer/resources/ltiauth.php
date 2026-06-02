@@ -18,15 +18,26 @@
 
 declare(strict_types=1);
 
-require_once("../vendor/composer/vendor/autoload.php");
+/**
+ * There is no way to process a $_GET Request with
+ * a valid third-party client_id param in regular initILIAS
+ */
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = $_POST;
-} else {
-    $data = $_GET;
+if (strtoupper($_SERVER['REQUEST_METHOD']) == 'POST') {
+    $orig = new ArrayObject($_POST);
+    $data = $orig->getArrayCopy();
+} elseif (strtoupper($_SERVER['REQUEST_METHOD']) == 'GET') {
+    $orig = new ArrayObject($_GET);
+    $data = $orig->getArrayCopy();
+    // early removing client_id from $_GET
+    // otherwise the client_id is interpreted as ILIAS client_id
+    // and client.ini.php will not be found
     if (isset($_GET['client_id'])) {
         unset($_GET['client_id']);
     }
+} else {
+    header($_SERVER["SERVER_PROTOCOL"] . " 405 Method Not Allowed", true, 405);
+    exit;
 }
 
 function sanitizeJson(string $string)
@@ -38,6 +49,7 @@ function sanitizeJson(string $string)
     return json_decode($string, true);
 }
 
+require_once '../vendor/composer/vendor/autoload.php';
 ilInitialisation::initILIAS();
 global $DIC;
 $scope = $data['scope'] ?? '';
@@ -74,77 +86,6 @@ if (
         $refId = $DIC->repositoryTree()->getParentId($childRefId);
     }
 
-}
-
-if ($isDlMode) {
-    $now = time();
-    $ctrl = $DIC->ctrl();
-
-    $iframe_url = ilObjLTIConsumer::getPlattformId() . '/ltidlreturn.php?provider_id=' . $provider_id
-        . '&ref_id=' . $refId
-        . '&new_type=lti';
-
-    $iss = ilObjLTIConsumer::getPlattformId();
-    $sub = $loginHint !== '' ? $loginHint : ilCmiXapiUser::getIdentAsId($this->getProvider()->getPrivacyIdent(), $DIC->user());
-    $payload = [
-        'iss' => $iss,
-        'aud' => $clientId,
-        'iat' => $now,
-        'exp' => $now + 600,
-        'nonce' => $nonce ?: bin2hex(random_bytes(8)),
-        'sub' => $sub,
-
-        'https://purl.imsglobal.org/spec/lti/claim/roles' => [
-            'http://purl.imsglobal.org/vocab/lis/v2/membership#Administrator',
-            'http://purl.imsglobal.org/vocab/lis/v2/membership#ContentDeveloper',
-            'http://purl.imsglobal.org/vocab/lis/v2/membership#Instructor',
-            'http://purl.imsglobal.org/vocab/lis/v2/membership#Learner',
-            'http://purl.imsglobal.org/vocab/lis/v2/membership#Mentor',
-            'http://purl.imsglobal.org/vocab/lis/v2/membership#Manager',
-            'http://purl.imsglobal.org/vocab/lis/v2/membership#Member',
-            'http://purl.imsglobal.org/vocab/lis/v2/membership#Officer',
-            'http://purl.imsglobal.org/vocab/lis/v2/membership#Instructor',
-        ],
-        'https://purl.imsglobal.org/spec/lti/claim/message_type' => 'LtiDeepLinkingRequest',
-        'https://purl.imsglobal.org/spec/lti/claim/version' => '1.3.0',
-
-    ];
-
-    if (isset($deploymentId)) {
-        $payload['https://purl.imsglobal.org/spec/lti/claim/deployment_id'] = (string) $deploymentId;
-    }
-
-    $payload['https://purl.imsglobal.org/spec/lti-dl/claim/deep_linking_settings'] = [
-        'deep_link_return_url' => $iframe_url,
-        'accept_types' => ['ltiResourceLink'],
-        'accept_presentation_document_targets' => ['iframe', 'window', 'frame'],
-        'accept_multiple' => true
-    ];
-
-    $payload['https://purl.imsglobal.org/spec/lti/claim/tool_platform'] = [
-        'name' => 'ILIAS',
-        'version' => ILIAS_VERSION_NUMERIC ?? 'unknown',
-        'product_family_code' => 'ilias',
-    ];
-
-    $objLtiConsumer = new ilObjLTIConsumer($childRefId);
-    $consumerContentGui = new ilLTIConsumerContentGUI($objLtiConsumer);
-    $jwt = $consumerContentGui->getJwtForContentSelection($redirectUri, $clientId, $deploymentId, $nonce, $payload);
-
-    $redirSafe = htmlspecialchars($redirectUri, ENT_QUOTES);
-    $stateSafe = htmlspecialchars($state, ENT_QUOTES);
-    $jwtSafe = htmlspecialchars($jwt, ENT_QUOTES);
-    echo <<<HTML
-<!doctype html>
-<html><body onload="document.forms[0].submit()">
-  <form action="{$redirSafe}" method="post" enctype="application/x-www-form-urlencoded">
-    <input type="hidden" name="id_token" value="{$jwtSafe}">
-    <input type="hidden" name="state" value="{$stateSafe}">
-    <noscript><button type="submit">Continue</button></noscript>
-  </form>
-</body></html>
-HTML;
-    exit;
 }
 
 if (empty($ltiMessageHint)) {
@@ -218,11 +159,55 @@ if ($isContentSelection) {
 } else {
     $url = "../../../goto.php?target=lti_" . $ref_id . "&client_id=" . $il_client_id;
 }
+
+function buildSameSiteNoneSessionCookieHeader(): ?string
+{
+    if (session_status() !== PHP_SESSION_ACTIVE || session_id() === '') {
+        return null;
+    }
+
+    $cookieParams = session_get_cookie_params();
+    $secure = (bool) ($cookieParams['secure'] ?? false);
+    if (!$secure) {
+        return null;
+    }
+
+    $cookieName = session_name();
+    $cookieValue = session_id();
+    $path = (string) ($cookieParams['path'] ?? '/');
+    $domain = (string) ($cookieParams['domain'] ?? '');
+    $httpOnly = (bool) ($cookieParams['httponly'] ?? true);
+
+    $parts = [
+        rawurlencode($cookieName) . '=' . rawurlencode($cookieValue),
+        'Path=' . $path,
+        'Secure',
+        'SameSite=None'
+    ];
+
+    if ($domain !== '') {
+        $parts[] = 'Domain=' . $domain;
+    }
+    if ($httpOnly) {
+        $parts[] = 'HttpOnly';
+    }
+
+    return implode('; ', $parts);
+}
+
+$response = $DIC->http()->response()
+    ->withStatus(302)
+    ->withAddedHeader('Location', $url);
+
+$sessionCookieHeader = buildSameSiteNoneSessionCookieHeader();
+if ($sessionCookieHeader !== null) {
+    $response = $response->withAddedHeader('Set-Cookie', $sessionCookieHeader);
+}
+
 $DIC->http()->saveResponse(
-    $DIC->http()->response()
-        ->withStatus(302)
-        ->withAddedHeader('Location', $url)
+    $response
 );
+
 try {
     $DIC->http()->sendResponse();
     $DIC->http()->close();
