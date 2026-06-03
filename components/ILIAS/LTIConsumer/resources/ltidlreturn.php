@@ -59,14 +59,17 @@ foreach ($data->{'https://purl.imsglobal.org/spec/lti-dl/claim/content_items'} a
     $newObj->setProviderId($provider->getId());
     $newObj->setProvider($provider);
 
+    $customParams = [];
+    if (isset($item->url)) {
+        $customParams[] = 'target_link_uri=' . (string) $item->url;
+    }
     if (isset($item->custom) && is_object($item->custom)) {
-        $customParams = [];
         foreach ($item->custom as $k => $v) {
             $customParams[] = $k . '=' . $v;
         }
-        if ($customParams) {
-            $newObj->setCustomParams(implode(';', $customParams));
-        }
+    }
+    if ($customParams) {
+        $newObj->setCustomParams(implode(';', $customParams));
     }
 
     $newObj->save();
