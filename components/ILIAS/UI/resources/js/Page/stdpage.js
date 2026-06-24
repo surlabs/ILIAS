@@ -79,7 +79,10 @@ il.UI = il.UI || {};
 il.Util.addOnLoad(function () {
 	window.setTimeout(
 		function () {
-			if (il.UI.page.isSmallScreen() === false) {
+			if (
+				il.UI.page.isSmallScreen() === false
+				&& (document.activeElement === document.body || document.activeElement === document.documentElement)
+			) {
 				$("main").attr("tabindex", -1).focus();
 			}
 		}, 10

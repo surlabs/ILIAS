@@ -255,8 +255,7 @@ class ilMailFormGUI
         );
         if ($errors) {
             $this->showSubmissionErrors($errors);
-            $this->showForm($form);
-            $this->focusRecipientInputAfterSubmissionError($errors, $rcp_to, $rcp_cc, $rcp_bcc);
+            $this->showForm();
             $this->http->close();
         }
 
@@ -364,7 +363,6 @@ class ilMailFormGUI
 
             $this->showSubmissionErrors($errors);
             $this->showForm($form);
-            $this->focusRecipientInputAfterSubmissionError($errors, $rcp_to, $rcp_cc, $rcp_bcc);
 
             $this->http->close();
         } else {
@@ -437,7 +435,6 @@ class ilMailFormGUI
             $this->request_attachments = $files;
             $this->showSubmissionErrors($errors);
             $this->showForm($form);
-            $this->focusRecipientInputAfterSubmissionError($errors, $rcp_to, $rcp_cc, $rcp_bcc);
             return;
         }
 
@@ -984,101 +981,6 @@ class ilMailFormGUI
         if ($formatted_errors !== '') {
             $this->tpl->setOnScreenMessage('failure', $formatted_errors);
         }
-    }
-
-    /**
-     * @param list<ilMailError> $errors
-     */
-    private function focusRecipientInputAfterSubmissionError(
-        array $errors,
-        string $rcp_to,
-        string $rcp_cc,
-        string $rcp_bcc
-    ): void {
-        if (!$this->hasRecipientSubmissionError($errors)) {
-            return;
-        }
-
-        $field = $this->getRecipientFieldForSubmissionError($errors, $rcp_to, $rcp_cc, $rcp_bcc);
-
-        $this->tpl->addOnLoadCode(<<<JS
-            (function () {
-                var field = document.querySelector('form.c-form [data-il-ui-input-name$="/{$field}"]');
-                var focusable = field && field.querySelector(
-                    'input:not([type="hidden"]):not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled])'
-                );
-                if (focusable) {
-                    focusable.focus();
-                }
-            })();
-        JS);
-    }
-
-    /**
-     * @param list<ilMailError> $errors
-     */
-    private function hasRecipientSubmissionError(array $errors): bool
-    {
-        $recipient_error_language_variables = [
-            'mail_add_recipient',
-            'mail_following_rcp_not_valid',
-            'mail_generic_rcp_error',
-            'mail_multiple_role_recipients_found',
-            'mail_recipient_not_found',
-        ];
-
-        foreach ($errors as $error) {
-            if (in_array($error->getLanguageVariable(), $recipient_error_language_variables, true)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param list<ilMailError> $errors
-     */
-    private function getRecipientFieldForSubmissionError(
-        array $errors,
-        string $rcp_to,
-        string $rcp_cc,
-        string $rcp_bcc
-    ): string {
-        $recipients_by_field = [
-            'rcp_to' => $this->splitRecipientString($rcp_to),
-            'rcp_cc' => $this->splitRecipientString($rcp_cc),
-            'rcp_bcc' => $this->splitRecipientString($rcp_bcc),
-        ];
-
-        foreach ($errors as $error) {
-            foreach ($error->getPlaceHolderValues() as $placeholder_value) {
-                foreach ($recipients_by_field as $field => $recipients) {
-                    if (in_array(trim($placeholder_value), $recipients, true)) {
-                        return $field;
-                    }
-                }
-            }
-        }
-
-        foreach ($recipients_by_field as $field => $recipients) {
-            if ($recipients !== []) {
-                return $field;
-            }
-        }
-
-        return 'rcp_to';
-    }
-
-    /**
-     * @return list<string>
-     */
-    private function splitRecipientString(string $recipients): array
-    {
-        return array_values(array_filter(
-            array_map('trim', explode(',', $recipients)),
-            static fn(string $value): bool => $value !== ''
-        ));
     }
 
     protected function buildForm(?array $mail_data = null): Form
