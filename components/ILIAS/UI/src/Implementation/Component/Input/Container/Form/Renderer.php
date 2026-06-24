@@ -70,35 +70,9 @@ class Renderer extends AbstractComponentRenderer
         );
 
         $tpl->setVariable("BUTTONS_BOTTOM", $default_renderer->render($main_submit_button));
-        $inputs_html = $default_renderer->render($component->getInputGroup());
-        $tpl->setVariable("INPUTS", $inputs_html);
-        $this->maybeAddFocusOnFirstFieldError($inputs_html, $tpl);
+        $tpl->setVariable("INPUTS", $default_renderer->render($component->getInputGroup()));
 
         return $tpl->get();
-    }
-
-    protected function maybeAddFocusOnFirstFieldError(string $inputs_html, Template $tpl): void
-    {
-        if (!str_contains($inputs_html, 'c-input__error-msg')) {
-            return;
-        }
-
-        $form_id = $this->createId();
-        $tpl->setVariable('ID', $form_id);
-        $this->getJavascriptBinding()->addOnLoadCode(<<<JS
-            (function () {
-                var form = document.getElementById('$form_id');
-                var firstError = form && form.querySelector('.c-input[aria-describedby]');
-                var focusable = firstError && firstError.querySelector(
-                    '.tagify [contenteditable="true"], input:not([type="hidden"]):not([disabled]), ' +
-                    'select:not([disabled]), textarea:not([disabled]), button:not([disabled]), ' +
-                    '[tabindex]:not([tabindex="-1"])'
-                );
-                if (focusable) {
-                    focusable.focus();
-                }
-            })();
-        JS);
     }
 
     protected function maybeAddDedicatedName(Form\Form $component, Template $tpl): void

@@ -216,8 +216,7 @@ class StandardFormTest extends ILIAS_UI_TestBase
 
     public function testRenderWithErrorOnField(): void
     {
-        $js_binding = $this->getJavaScriptBinding();
-        $r = $this->getDefaultRenderer($js_binding);
+        $r = $this->getDefaultRenderer();
         $df = new Data\Factory();
         $language = $this->createMock(\ILIAS\Language\Language::class);
         $language
@@ -258,7 +257,7 @@ class StandardFormTest extends ILIAS_UI_TestBase
 
         $html = $this->brutallyTrimHTML($r->render($form));
         $expected = $this->brutallyTrimHTML('
-<form class="c-form c-form--horizontal" enctype="multipart/form-data" id="id_3" method="post">
+<form class="c-form c-form--horizontal" enctype="multipart/form-data" method="post">
     <div class="c-form__header">
     </div>
     <div class="c-form__error-msg alert alert-danger"><span class="sr-only">ui_error:</span>testing error
@@ -281,9 +280,6 @@ class StandardFormTest extends ILIAS_UI_TestBase
 ');
         $this->assertEquals($expected, $html);
         $this->assertHTMLEquals($expected, $html);
-        $this->assertCount(1, $js_binding->on_load_code);
-        $this->assertStringContainsString("document.getElementById('id_3')", $js_binding->on_load_code[0]);
-        $this->assertStringContainsString('focusable.focus()', $js_binding->on_load_code[0]);
     }
 
 
