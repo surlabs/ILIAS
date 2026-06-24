@@ -70,9 +70,40 @@ class Renderer extends AbstractComponentRenderer
         );
 
         $tpl->setVariable("BUTTONS_BOTTOM", $default_renderer->render($main_submit_button));
-        $tpl->setVariable("INPUTS", $default_renderer->render($component->getInputGroup()));
+        $inputs_html = $default_renderer->render($component->getInputGroup());
+        $tpl->setVariable("INPUTS", $inputs_html);
+        $this->maybeAddFocusOnFirstFieldError($inputs_html, $tpl);
 
         return $tpl->get();
+    }
+
+    protected function maybeAddFocusOnFirstFieldError(string $inputs_html, Template $tpl): void
+    {
+        if (!str_contains($inputs_html, 'c-input__error-msg')) {
+            return;
+        }
+
+        $form_id = $this->createId();
+        $tpl->setVariable('ID', $form_id);
+        $this->getJavascriptBinding()->addOnLoadCode(<<<JS
+            (function () {
+                const form = document.getElementById('$form_id');
+                if (!form) {
+                    return;
+                }
+                const firstError = form.querySelector('.c-input[aria-describedby]');
+                if (!firstError) {
+                    return;
+                }
+                const focusable = firstError.querySelector(
+                    'input:not([type="hidden"]):not([disabled]), select:not([disabled]), ' +
+                    'textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                );
+                if (focusable) {
+                    focusable.focus();
+                }
+            })();
+        JS);
     }
 
     protected function maybeAddDedicatedName(Form\Form $component, Template $tpl): void
