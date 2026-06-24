@@ -872,8 +872,59 @@ class ilMailFormGUI
         $this->addToolbarButtons($form);
 
         $this->tpl->setVariable('FORM', $this->ui_renderer->render($form));
+        $this->focusFirstErroredFormInput($form);
         $this->tpl->addJavaScript('assets/js/ilMailComposeFunctions.js');
         $this->tpl->printToStdout();
+    }
+
+    private function focusFirstErroredFormInput(Form $form): void
+    {
+        $input_name = $this->getFirstErroredInputName($form->getInputGroup()->getInputs());
+        if ($input_name === null) {
+            return;
+        }
+
+        $encoded_input_name = json_encode($input_name, JSON_THROW_ON_ERROR);
+        $this->tpl->addOnLoadCode(<<<JS
+            window.setTimeout(function () {
+                var inputName = {$encoded_input_name};
+                var field = null;
+                document.querySelectorAll('form.c-form [data-il-ui-input-name]').forEach(function (candidate) {
+                    if (field === null && candidate.getAttribute('data-il-ui-input-name') === inputName) {
+                        field = candidate;
+                    }
+                });
+                var focusable = field && field.querySelector(
+                    '.tagify [contenteditable="true"], input:not([type="hidden"]):not([disabled]), ' +
+                    'select:not([disabled]), textarea:not([disabled]), button:not([disabled])'
+                );
+                if (focusable) {
+                    focusable.focus();
+                }
+            }, 50);
+        JS);
+    }
+
+    private function getFirstErroredInputName(array $inputs): ?string
+    {
+        foreach ($inputs as $input) {
+            if (method_exists($input, 'getInputs')) {
+                $name = $this->getFirstErroredInputName($input->getInputs());
+                if ($name !== null) {
+                    return $name;
+                }
+            }
+
+            if (
+                method_exists($input, 'getError')
+                && method_exists($input, 'getName')
+                && $input->getError() !== null
+            ) {
+                return $input->getName();
+            }
+        }
+
+        return null;
     }
 
     public function lookupRecipientAsync(): void
