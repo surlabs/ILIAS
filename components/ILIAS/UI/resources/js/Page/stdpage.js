@@ -79,12 +79,27 @@ il.UI = il.UI || {};
 il.Util.addOnLoad(function () {
 	window.setTimeout(
 		function () {
-			if (
-				il.UI.page.isSmallScreen() === false
-				&& (document.activeElement === document.body || document.activeElement === document.documentElement)
-			) {
-				$("main").attr("tabindex", -1).focus();
+			var marker = document.createElement("div");
+			marker.textContent = "DIAGNOSTICO A11Y: stdpage.js cargado; forzando foco al formulario";
+			marker.setAttribute("style", "position:fixed;z-index:999999;top:0;left:0;right:0;padding:12px;background:#b00020;color:#fff;font-size:18px;font-weight:bold;text-align:center;");
+			document.body.appendChild(marker);
+
+			var focusable = document.querySelector(
+				"form.c-form .tagify [contenteditable='true'], " +
+				"form.c-form input:not([type='hidden']):not([disabled]), " +
+				"form.c-form select:not([disabled]), " +
+				"form.c-form textarea:not([disabled]), " +
+				"form.c-form button:not([disabled])"
+			);
+
+			if (focusable) {
+				focusable.focus();
+				focusable.scrollIntoView({ block: "center", inline: "nearest" });
+				focusable.setAttribute("style", (focusable.getAttribute("style") || "") + ";outline:8px solid #b00020 !important;box-shadow:0 0 0 12px #ffd400 !important;");
+				marker.textContent = "DIAGNOSTICO A11Y: foco forzado sobre " + focusable.tagName.toLowerCase();
+			} else {
+				marker.textContent = "DIAGNOSTICO A11Y: stdpage.js cargado, pero no se encontro ningun control en form.c-form";
 			}
-		}, 10
+		}, 1000
 	);
 });
