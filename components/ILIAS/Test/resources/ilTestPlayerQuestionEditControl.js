@@ -171,6 +171,10 @@ il.TestPlayerQuestionEditControl = new function() {
         // this creates a form submit with hidden redirection url
         $('a').not('.il-maincontrols-metabar > li > a').click(self.checkNavigation);
 
+        // route sidebar question-list steps (rendered as UI shy buttons) through
+        // the same save-on-navigation flow used by the <a> links above
+        bindQuestionListNavigation();
+
         // add the current answering status when form is submitted
         // this is needed for marking questions and requesting hints
         $(FORM_SELECTOR).submit(handleFormSubmit);
@@ -412,18 +416,51 @@ il.TestPlayerQuestionEditControl = new function() {
         }
     }
 
+    // Bind the sidebar question-list steps to the save-on-navigation flow.
+
+    function bindQuestionListNavigation() {
+        $('.il-workflow.linear .il-workflow-step button[data-action]').each(function() {
+            this.addEventListener('click', function(e) {
+                var href = this.getAttribute('data-action');
+                if (!href) {
+                    return;
+                }
+                e.preventDefault();
+                e.stopImmediatePropagation();
+
+                var cmd = '';
+                try {
+                    cmd = (new URL(href, window.location.href)).searchParams.get('cmd') || '';
+                } catch (err) {}
+
+                self.checkNavigation(href, cmd, e, this);
+            }, true);
+        });
+    }
+
     /**
      * Event handler for clicked links on the test page
      * @returns {boolean}
      */
-    this.checkNavigation = (href, cmd, e) => {
+    this.checkNavigation = (href, cmd, e, sourceElement) => {
+
+        // read attributes from the clicked element when provided; otherwise
+        // fall back to the module scope arrow-function
+        var sourceJq = $(sourceElement || this);
 
         // attributes of the clicked link
-        var id = $(this).attr('id');
+        var id = sourceJq.attr('id');
         if (href === undefined) {
-          href = $(this).attr('href');
+          href = sourceJq.attr('href') || sourceJq.attr('data-action');
         }
-        var target = $(this).attr('target');
+        var target = sourceJq.attr('target');
+
+        if (!href) {
+            if (e && typeof e.preventDefault === 'function') {
+                e.preventDefault();
+            }
+            return false;
+        }
 
         // keep default behavior for links that open in another window
         // (fullscreen view of media objects)
